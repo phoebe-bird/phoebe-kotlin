@@ -26,8 +26,8 @@ import java.util.Objects
 class SpecieListParams
 private constructor(
     private val speciesCode: String?,
-    private val lat: Double,
-    private val lng: Double,
+    private val lat: Float,
+    private val lng: Float,
     private val back: Long?,
     private val dist: Long?,
     private val hotspot: Boolean?,
@@ -40,9 +40,9 @@ private constructor(
 
     fun speciesCode(): String? = speciesCode
 
-    fun lat(): Double = lat
+    fun lat(): Float = lat
 
-    fun lng(): Double = lng
+    fun lng(): Float = lng
 
     /** The number of days back to fetch observations. */
     fun back(): Long? = back
@@ -86,8 +86,8 @@ private constructor(
     class Builder internal constructor() {
 
         private var speciesCode: String? = null
-        private var lat: Double? = null
-        private var lng: Double? = null
+        private var lat: Float? = null
+        private var lng: Float? = null
         private var back: Long? = null
         private var dist: Long? = null
         private var hotspot: Boolean? = null
@@ -113,9 +113,9 @@ private constructor(
 
         fun speciesCode(speciesCode: String?) = apply { this.speciesCode = speciesCode }
 
-        fun lat(lat: Double) = apply { this.lat = lat }
+        fun lat(lat: Float) = apply { this.lat = lat }
 
-        fun lng(lng: Double) = apply { this.lng = lng }
+        fun lng(lng: Float) = apply { this.lng = lng }
 
         /** The number of days back to fetch observations. */
         fun back(back: Long?) = apply { this.back = back }

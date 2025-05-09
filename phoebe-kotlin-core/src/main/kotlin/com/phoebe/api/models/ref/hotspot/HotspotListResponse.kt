@@ -22,7 +22,7 @@ private constructor(
     private val lng: JsonField<Double>,
     private val locId: JsonField<String>,
     private val locName: JsonField<String>,
-    private val numSpeciesAllTime: JsonField<Long>,
+    private val numSpeciesAllTime: JsonField<Int>,
     private val subnational1Code: JsonField<String>,
     private val subnational2Code: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -42,7 +42,7 @@ private constructor(
         @JsonProperty("locName") @ExcludeMissing locName: JsonField<String> = JsonMissing.of(),
         @JsonProperty("numSpeciesAllTime")
         @ExcludeMissing
-        numSpeciesAllTime: JsonField<Long> = JsonMissing.of(),
+        numSpeciesAllTime: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("subnational1Code")
         @ExcludeMissing
         subnational1Code: JsonField<String> = JsonMissing.of(),
@@ -102,7 +102,7 @@ private constructor(
      * @throws PhoebeInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun numSpeciesAllTime(): Long? = numSpeciesAllTime.getNullable("numSpeciesAllTime")
+    fun numSpeciesAllTime(): Int? = numSpeciesAllTime.getNullable("numSpeciesAllTime")
 
     /**
      * @throws PhoebeInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -166,7 +166,7 @@ private constructor(
      */
     @JsonProperty("numSpeciesAllTime")
     @ExcludeMissing
-    fun _numSpeciesAllTime(): JsonField<Long> = numSpeciesAllTime
+    fun _numSpeciesAllTime(): JsonField<Int> = numSpeciesAllTime
 
     /**
      * Returns the raw JSON value of [subnational1Code].
@@ -215,7 +215,7 @@ private constructor(
         private var lng: JsonField<Double> = JsonMissing.of()
         private var locId: JsonField<String> = JsonMissing.of()
         private var locName: JsonField<String> = JsonMissing.of()
-        private var numSpeciesAllTime: JsonField<Long> = JsonMissing.of()
+        private var numSpeciesAllTime: JsonField<Int> = JsonMissing.of()
         private var subnational1Code: JsonField<String> = JsonMissing.of()
         private var subnational2Code: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -295,17 +295,17 @@ private constructor(
          */
         fun locName(locName: JsonField<String>) = apply { this.locName = locName }
 
-        fun numSpeciesAllTime(numSpeciesAllTime: Long) =
+        fun numSpeciesAllTime(numSpeciesAllTime: Int) =
             numSpeciesAllTime(JsonField.of(numSpeciesAllTime))
 
         /**
          * Sets [Builder.numSpeciesAllTime] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.numSpeciesAllTime] with a well-typed [Long] value
+         * You should usually call [Builder.numSpeciesAllTime] with a well-typed [Int] value
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun numSpeciesAllTime(numSpeciesAllTime: JsonField<Long>) = apply {
+        fun numSpeciesAllTime(numSpeciesAllTime: JsonField<Int>) = apply {
             this.numSpeciesAllTime = numSpeciesAllTime
         }
 
