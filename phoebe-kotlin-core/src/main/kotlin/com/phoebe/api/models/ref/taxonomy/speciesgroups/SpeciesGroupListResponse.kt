@@ -20,7 +20,7 @@ class SpeciesGroupListResponse
 private constructor(
     private val groupName: JsonField<String>,
     private val groupOrder: JsonField<Long>,
-    private val taxonOrderBounds: JsonField<List<List<Double>>>,
+    private val taxonOrderBounds: JsonField<List<List<Float>>>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -30,7 +30,7 @@ private constructor(
         @JsonProperty("groupOrder") @ExcludeMissing groupOrder: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("taxonOrderBounds")
         @ExcludeMissing
-        taxonOrderBounds: JsonField<List<List<Double>>> = JsonMissing.of(),
+        taxonOrderBounds: JsonField<List<List<Float>>> = JsonMissing.of(),
     ) : this(groupName, groupOrder, taxonOrderBounds, mutableMapOf())
 
     /**
@@ -49,7 +49,7 @@ private constructor(
      * @throws PhoebeInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun taxonOrderBounds(): List<List<Double>>? = taxonOrderBounds.getNullable("taxonOrderBounds")
+    fun taxonOrderBounds(): List<List<Float>>? = taxonOrderBounds.getNullable("taxonOrderBounds")
 
     /**
      * Returns the raw JSON value of [groupName].
@@ -73,7 +73,7 @@ private constructor(
      */
     @JsonProperty("taxonOrderBounds")
     @ExcludeMissing
-    fun _taxonOrderBounds(): JsonField<List<List<Double>>> = taxonOrderBounds
+    fun _taxonOrderBounds(): JsonField<List<List<Float>>> = taxonOrderBounds
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -98,7 +98,7 @@ private constructor(
 
         private var groupName: JsonField<String> = JsonMissing.of()
         private var groupOrder: JsonField<Long> = JsonMissing.of()
-        private var taxonOrderBounds: JsonField<MutableList<List<Double>>>? = null
+        private var taxonOrderBounds: JsonField<MutableList<List<Float>>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(speciesGroupListResponse: SpeciesGroupListResponse) = apply {
@@ -129,26 +129,26 @@ private constructor(
          */
         fun groupOrder(groupOrder: JsonField<Long>) = apply { this.groupOrder = groupOrder }
 
-        fun taxonOrderBounds(taxonOrderBounds: List<List<Double>>) =
+        fun taxonOrderBounds(taxonOrderBounds: List<List<Float>>) =
             taxonOrderBounds(JsonField.of(taxonOrderBounds))
 
         /**
          * Sets [Builder.taxonOrderBounds] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.taxonOrderBounds] with a well-typed `List<List<Double>>`
+         * You should usually call [Builder.taxonOrderBounds] with a well-typed `List<List<Float>>`
          * value instead. This method is primarily for setting the field to an undocumented or not
          * yet supported value.
          */
-        fun taxonOrderBounds(taxonOrderBounds: JsonField<List<List<Double>>>) = apply {
+        fun taxonOrderBounds(taxonOrderBounds: JsonField<List<List<Float>>>) = apply {
             this.taxonOrderBounds = taxonOrderBounds.map { it.toMutableList() }
         }
 
         /**
-         * Adds a single [List<Double>] to [taxonOrderBounds].
+         * Adds a single [List<Float>] to [taxonOrderBounds].
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
-        fun addTaxonOrderBound(taxonOrderBound: List<Double>) = apply {
+        fun addTaxonOrderBound(taxonOrderBound: List<Float>) = apply {
             taxonOrderBounds =
                 (taxonOrderBounds ?: JsonField.of(mutableListOf())).also {
                     checkKnown("taxonOrderBounds", it).add(taxonOrderBound)

@@ -18,8 +18,8 @@ import java.util.Objects
  */
 class GeoRetrieveParams
 private constructor(
-    private val lat: Double,
-    private val lng: Double,
+    private val lat: Float,
+    private val lng: Float,
     private val back: Long?,
     private val dist: Long?,
     private val fmt: Fmt?,
@@ -27,9 +27,9 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun lat(): Double = lat
+    fun lat(): Float = lat
 
-    fun lng(): Double = lng
+    fun lng(): Float = lng
 
     /** The number of days back to fetch hotspots. */
     fun back(): Long? = back
@@ -63,8 +63,8 @@ private constructor(
     /** A builder for [GeoRetrieveParams]. */
     class Builder internal constructor() {
 
-        private var lat: Double? = null
-        private var lng: Double? = null
+        private var lat: Float? = null
+        private var lng: Float? = null
         private var back: Long? = null
         private var dist: Long? = null
         private var fmt: Fmt? = null
@@ -81,9 +81,9 @@ private constructor(
             additionalQueryParams = geoRetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun lat(lat: Double) = apply { this.lat = lat }
+        fun lat(lat: Float) = apply { this.lat = lat }
 
-        fun lng(lng: Double) = apply { this.lng = lng }
+        fun lng(lng: Float) = apply { this.lng = lng }
 
         /** The number of days back to fetch hotspots. */
         fun back(back: Long?) = apply { this.back = back }

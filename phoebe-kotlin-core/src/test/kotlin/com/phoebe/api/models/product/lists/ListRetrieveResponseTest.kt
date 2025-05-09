@@ -38,7 +38,7 @@ internal class ListRetrieveResponseTest {
                 )
                 .locId("locId")
                 .numObservers(0L)
-                .numSpecies(0L)
+                .numSpecies(0)
                 .addOb(
                     ListRetrieveResponse.Ob.builder()
                         .addObsAux(
@@ -94,7 +94,7 @@ internal class ListRetrieveResponseTest {
             )
         assertThat(listRetrieveResponse.locId()).isEqualTo("locId")
         assertThat(listRetrieveResponse.numObservers()).isEqualTo(0L)
-        assertThat(listRetrieveResponse.numSpecies()).isEqualTo(0L)
+        assertThat(listRetrieveResponse.numSpecies()).isEqualTo(0)
         assertThat(listRetrieveResponse.obs())
             .containsExactly(
                 ListRetrieveResponse.Ob.builder()
@@ -155,7 +155,7 @@ internal class ListRetrieveResponseTest {
                 )
                 .locId("locId")
                 .numObservers(0L)
-                .numSpecies(0L)
+                .numSpecies(0)
                 .addOb(
                     ListRetrieveResponse.Ob.builder()
                         .addObsAux(

@@ -13,18 +13,18 @@ internal class Top100RetrieveResponseTest {
     fun create() {
         val top100RetrieveResponse =
             Top100RetrieveResponse.builder()
-                .numCompleteChecklists(0L)
-                .numSpecies(0L)
+                .numCompleteChecklists(0)
+                .numSpecies(0)
                 .profileHandle("profileHandle")
-                .rowNum(0L)
+                .rowNum(0)
                 .userDisplayName("userDisplayName")
                 .userId("userId")
                 .build()
 
-        assertThat(top100RetrieveResponse.numCompleteChecklists()).isEqualTo(0L)
-        assertThat(top100RetrieveResponse.numSpecies()).isEqualTo(0L)
+        assertThat(top100RetrieveResponse.numCompleteChecklists()).isEqualTo(0)
+        assertThat(top100RetrieveResponse.numSpecies()).isEqualTo(0)
         assertThat(top100RetrieveResponse.profileHandle()).isEqualTo("profileHandle")
-        assertThat(top100RetrieveResponse.rowNum()).isEqualTo(0L)
+        assertThat(top100RetrieveResponse.rowNum()).isEqualTo(0)
         assertThat(top100RetrieveResponse.userDisplayName()).isEqualTo("userDisplayName")
         assertThat(top100RetrieveResponse.userId()).isEqualTo("userId")
     }
@@ -34,10 +34,10 @@ internal class Top100RetrieveResponseTest {
         val jsonMapper = jsonMapper()
         val top100RetrieveResponse =
             Top100RetrieveResponse.builder()
-                .numCompleteChecklists(0L)
-                .numSpecies(0L)
+                .numCompleteChecklists(0)
+                .numSpecies(0)
                 .profileHandle("profileHandle")
-                .rowNum(0L)
+                .rowNum(0)
                 .userDisplayName("userDisplayName")
                 .userId("userId")
                 .build()
