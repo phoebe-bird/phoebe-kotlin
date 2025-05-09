@@ -24,9 +24,20 @@ interface ChecklistService {
      * _subId_, _subnational1Code_ and _present_.
      */
     fun view(
+        subId: String,
+        params: ChecklistViewParams = ChecklistViewParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ChecklistViewResponse = view(params.toBuilder().subId(subId).build(), requestOptions)
+
+    /** @see [view] */
+    fun view(
         params: ChecklistViewParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ChecklistViewResponse
+
+    /** @see [view] */
+    fun view(subId: String, requestOptions: RequestOptions): ChecklistViewResponse =
+        view(subId, ChecklistViewParams.none(), requestOptions)
 
     /** A view of [ChecklistService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -37,8 +48,25 @@ interface ChecklistService {
          */
         @MustBeClosed
         fun view(
+            subId: String,
+            params: ChecklistViewParams = ChecklistViewParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ChecklistViewResponse> =
+            view(params.toBuilder().subId(subId).build(), requestOptions)
+
+        /** @see [view] */
+        @MustBeClosed
+        fun view(
             params: ChecklistViewParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ChecklistViewResponse>
+
+        /** @see [view] */
+        @MustBeClosed
+        fun view(
+            subId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ChecklistViewResponse> =
+            view(subId, ChecklistViewParams.none(), requestOptions)
     }
 }

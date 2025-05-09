@@ -21,9 +21,20 @@ interface SpeciesListService {
      * larger regions.
      */
     fun list(
+        regionCode: String,
+        params: SpeciesListListParams = SpeciesListListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<String> = list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
         params: SpeciesListListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<String>
+
+    /** @see [list] */
+    fun list(regionCode: String, requestOptions: RequestOptions): List<String> =
+        list(regionCode, SpeciesListListParams.none(), requestOptions)
 
     /**
      * A view of [SpeciesListService] that provides access to raw HTTP responses for each method.
@@ -36,8 +47,25 @@ interface SpeciesListService {
          */
         @MustBeClosed
         fun list(
+            regionCode: String,
+            params: SpeciesListListParams = SpeciesListListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<String>> =
+            list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
             params: SpeciesListListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<String>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            regionCode: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<List<String>> =
+            list(regionCode, SpeciesListListParams.none(), requestOptions)
     }
 }

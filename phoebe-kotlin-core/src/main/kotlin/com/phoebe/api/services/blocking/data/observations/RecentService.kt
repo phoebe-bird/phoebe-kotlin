@@ -30,9 +30,20 @@ interface RecentService {
      * region specified.
      */
     fun list(
+        regionCode: String,
+        params: RecentListParams = RecentListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<Observation> = list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
         params: RecentListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation>
+
+    /** @see [list] */
+    fun list(regionCode: String, requestOptions: RequestOptions): List<Observation> =
+        list(regionCode, RecentListParams.none(), requestOptions)
 
     /** A view of [RecentService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -49,8 +60,25 @@ interface RecentService {
          */
         @MustBeClosed
         fun list(
+            regionCode: String,
+            params: RecentListParams = RecentListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<Observation>> =
+            list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
             params: RecentListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<Observation>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            regionCode: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<List<Observation>> =
+            list(regionCode, RecentListParams.none(), requestOptions)
     }
 }

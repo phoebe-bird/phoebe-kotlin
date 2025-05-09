@@ -19,9 +19,20 @@ interface FormServiceAsync {
      * species that was passed in.
      */
     suspend fun list(
+        speciesCode: String,
+        params: FormListParams = FormListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<String> = list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: FormListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<String>
+
+    /** @see [list] */
+    suspend fun list(speciesCode: String, requestOptions: RequestOptions): List<String> =
+        list(speciesCode, FormListParams.none(), requestOptions)
 
     /** A view of [FormServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -32,8 +43,24 @@ interface FormServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            speciesCode: String,
+            params: FormListParams = FormListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<String>> =
+            list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: FormListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<String>>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            speciesCode: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<List<String>> = list(speciesCode, FormListParams.none(), requestOptions)
     }
 }

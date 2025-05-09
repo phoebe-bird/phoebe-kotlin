@@ -28,6 +28,14 @@ interface SpecieService {
      * When using the _r_ query parameter set the _regionCode_ URL parameter to an empty string.
      */
     fun retrieve(
+        speciesCode: String,
+        params: SpecieRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<Observation> =
+        retrieve(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
         params: SpecieRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation>
@@ -39,6 +47,15 @@ interface SpecieService {
          * Returns a raw HTTP response for `get /data/obs/{regionCode}/recent/{speciesCode}`, but is
          * otherwise the same as [SpecieService.retrieve].
          */
+        @MustBeClosed
+        fun retrieve(
+            speciesCode: String,
+            params: SpecieRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<Observation>> =
+            retrieve(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: SpecieRetrieveParams,

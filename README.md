@@ -42,10 +42,7 @@ import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveResponse
 // Configures using the `EBIRD_API_KEY` and `PHOEBE_BASE_URL` environment variables
 val client: PhoebeClient = PhoebeOkHttpClient.fromEnv()
 
-val params: InfoRetrieveParams = InfoRetrieveParams.builder()
-    .locId("L99381")
-    .build()
-val info: InfoRetrieveResponse = client.ref().hotspot().info().retrieve(params)
+val info: InfoRetrieveResponse = client.ref().hotspot().info().retrieve("L99381")
 ```
 
 ## Client configuration
@@ -122,10 +119,7 @@ import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveResponse
 // Configures using the `EBIRD_API_KEY` and `PHOEBE_BASE_URL` environment variables
 val client: PhoebeClient = PhoebeOkHttpClient.fromEnv()
 
-val params: InfoRetrieveParams = InfoRetrieveParams.builder()
-    .locId("L99381")
-    .build()
-val info: InfoRetrieveResponse = client.async().ref().hotspot().info().retrieve(params)
+val info: InfoRetrieveResponse = client.async().ref().hotspot().info().retrieve("L99381")
 ```
 
 Or create an asynchronous client from the beginning:
@@ -139,10 +133,7 @@ import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveResponse
 // Configures using the `EBIRD_API_KEY` and `PHOEBE_BASE_URL` environment variables
 val client: PhoebeClientAsync = PhoebeOkHttpClientAsync.fromEnv()
 
-val params: InfoRetrieveParams = InfoRetrieveParams.builder()
-    .locId("L99381")
-    .build()
-val info: InfoRetrieveResponse = client.ref().hotspot().info().retrieve(params)
+val info: InfoRetrieveResponse = client.ref().hotspot().info().retrieve("L99381")
 ```
 
 The asynchronous client supports the same options as the synchronous one, except most methods are [suspending](https://kotlinlang.org/docs/coroutines-guide.html).
@@ -159,10 +150,7 @@ import com.phoebe.api.core.http.HttpResponseFor
 import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveParams
 import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveResponse
 
-val params: InfoRetrieveParams = InfoRetrieveParams.builder()
-    .locId("L99381")
-    .build()
-val info: HttpResponseFor<InfoRetrieveResponse> = client.ref().hotspot().info().withRawResponse().retrieve(params)
+val info: HttpResponseFor<InfoRetrieveResponse> = client.ref().hotspot().info().withRawResponse().retrieve("L99381")
 
 val statusCode: Int = info.statusCode()
 val headers: Headers = info.headers()
@@ -265,7 +253,7 @@ import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveParams
 import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveResponse
 
 val info: InfoRetrieveResponse = client.ref().hotspot().info().retrieve(
-  params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
+  "L99381", RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
 )
 ```
 
@@ -364,9 +352,7 @@ To set a documented parameter or property to an undocumented or not yet supporte
 ```kotlin
 import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveParams
 
-val params: InfoRetrieveParams = InfoRetrieveParams.builder()
-    .locId("L99381")
-    .build()
+val params: InfoRetrieveParams = InfoRetrieveParams.builder().build()
 ```
 
 The most straightforward way to create a [`JsonValue`](phoebe-kotlin-core/src/main/kotlin/com/phoebe/api/core/Values.kt) is using its `from(...)` method:
@@ -481,7 +467,7 @@ import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveParams
 import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveResponse
 
 val info: InfoRetrieveResponse = client.ref().hotspot().info().retrieve(
-  params, RequestOptions.builder().responseValidation(true).build()
+  "L99381", RequestOptions.builder().responseValidation(true).build()
 )
 ```
 

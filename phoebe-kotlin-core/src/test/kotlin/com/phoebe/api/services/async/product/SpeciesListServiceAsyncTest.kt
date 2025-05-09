@@ -4,7 +4,6 @@ package com.phoebe.api.services.async.product
 
 import com.phoebe.api.TestServerExtension
 import com.phoebe.api.client.okhttp.PhoebeOkHttpClientAsync
-import com.phoebe.api.models.product.specieslist.SpeciesListListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -20,8 +19,6 @@ internal class SpeciesListServiceAsyncTest {
                 .build()
         val speciesListServiceAsync = client.product().speciesList()
 
-        speciesListServiceAsync.list(
-            SpeciesListListParams.builder().regionCode("regionCode").build()
-        )
+        speciesListServiceAsync.list("regionCode")
     }
 }

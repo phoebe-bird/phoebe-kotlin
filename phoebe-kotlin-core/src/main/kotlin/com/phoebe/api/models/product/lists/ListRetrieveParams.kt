@@ -3,7 +3,6 @@
 package com.phoebe.api.models.product.lists
 
 import com.phoebe.api.core.Params
-import com.phoebe.api.core.checkRequired
 import com.phoebe.api.core.http.Headers
 import com.phoebe.api.core.http.QueryParams
 import java.util.Objects
@@ -11,13 +10,13 @@ import java.util.Objects
 /** Get information on the most recently submitted checklists for a region. */
 class ListRetrieveParams
 private constructor(
-    private val regionCode: String,
+    private val regionCode: String?,
     private val maxResults: Long?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun regionCode(): String = regionCode
+    fun regionCode(): String? = regionCode
 
     /** Only fetch this number of checklists. */
     fun maxResults(): Long? = maxResults
@@ -30,14 +29,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [ListRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .regionCode()
-         * ```
-         */
+        fun none(): ListRetrieveParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [ListRetrieveParams]. */
         fun builder() = Builder()
     }
 
@@ -56,7 +50,7 @@ private constructor(
             additionalQueryParams = listRetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun regionCode(regionCode: String) = apply { this.regionCode = regionCode }
+        fun regionCode(regionCode: String?) = apply { this.regionCode = regionCode }
 
         /** Only fetch this number of checklists. */
         fun maxResults(maxResults: Long?) = apply { this.maxResults = maxResults }
@@ -170,17 +164,10 @@ private constructor(
          * Returns an immutable instance of [ListRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .regionCode()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): ListRetrieveParams =
             ListRetrieveParams(
-                checkRequired("regionCode", regionCode),
+                regionCode,
                 maxResults,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -189,7 +176,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> regionCode
+            0 -> regionCode ?: ""
             else -> ""
         }
 

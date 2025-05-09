@@ -21,9 +21,20 @@ interface InfoServiceAsync {
      * then an HTTP 410 (Gone) error is returned.
      */
     suspend fun retrieve(
+        locId: String,
+        params: InfoRetrieveParams = InfoRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): InfoRetrieveResponse = retrieve(params.toBuilder().locId(locId).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: InfoRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InfoRetrieveResponse
+
+    /** @see [retrieve] */
+    suspend fun retrieve(locId: String, requestOptions: RequestOptions): InfoRetrieveResponse =
+        retrieve(locId, InfoRetrieveParams.none(), requestOptions)
 
     /** A view of [InfoServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -34,8 +45,25 @@ interface InfoServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            locId: String,
+            params: InfoRetrieveParams = InfoRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InfoRetrieveResponse> =
+            retrieve(params.toBuilder().locId(locId).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: InfoRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InfoRetrieveResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            locId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<InfoRetrieveResponse> =
+            retrieve(locId, InfoRetrieveParams.none(), requestOptions)
     }
 }

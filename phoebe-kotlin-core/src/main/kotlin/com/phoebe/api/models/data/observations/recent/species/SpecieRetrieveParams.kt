@@ -24,7 +24,7 @@ import java.util.Objects
 class SpecieRetrieveParams
 private constructor(
     private val regionCode: String,
-    private val speciesCode: String,
+    private val speciesCode: String?,
     private val back: Long?,
     private val hotspot: Boolean?,
     private val includeProvisional: Boolean?,
@@ -37,7 +37,7 @@ private constructor(
 
     fun regionCode(): String = regionCode
 
-    fun speciesCode(): String = speciesCode
+    fun speciesCode(): String? = speciesCode
 
     /** The number of days back to fetch observations. */
     fun back(): Long? = back
@@ -71,7 +71,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .regionCode()
-         * .speciesCode()
          * ```
          */
         fun builder() = Builder()
@@ -106,7 +105,7 @@ private constructor(
 
         fun regionCode(regionCode: String) = apply { this.regionCode = regionCode }
 
-        fun speciesCode(speciesCode: String) = apply { this.speciesCode = speciesCode }
+        fun speciesCode(speciesCode: String?) = apply { this.speciesCode = speciesCode }
 
         /** The number of days back to fetch observations. */
         fun back(back: Long?) = apply { this.back = back }
@@ -270,7 +269,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .regionCode()
-         * .speciesCode()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -278,7 +276,7 @@ private constructor(
         fun build(): SpecieRetrieveParams =
             SpecieRetrieveParams(
                 checkRequired("regionCode", regionCode),
-                checkRequired("speciesCode", speciesCode),
+                speciesCode,
                 back,
                 hotspot,
                 includeProvisional,
@@ -293,7 +291,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> regionCode
-            1 -> speciesCode
+            1 -> speciesCode ?: ""
             else -> ""
         }
 

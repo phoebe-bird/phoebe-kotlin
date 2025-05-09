@@ -3,7 +3,6 @@
 package com.phoebe.api.models.ref.hotspot.info
 
 import com.phoebe.api.core.Params
-import com.phoebe.api.core.checkRequired
 import com.phoebe.api.core.http.Headers
 import com.phoebe.api.core.http.QueryParams
 import java.util.Objects
@@ -15,12 +14,12 @@ import java.util.Objects
  */
 class InfoRetrieveParams
 private constructor(
-    private val locId: String,
+    private val locId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun locId(): String = locId
+    fun locId(): String? = locId
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -30,14 +29,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [InfoRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .locId()
-         * ```
-         */
+        fun none(): InfoRetrieveParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [InfoRetrieveParams]. */
         fun builder() = Builder()
     }
 
@@ -54,7 +48,7 @@ private constructor(
             additionalQueryParams = infoRetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun locId(locId: String) = apply { this.locId = locId }
+        fun locId(locId: String?) = apply { this.locId = locId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -158,25 +152,14 @@ private constructor(
          * Returns an immutable instance of [InfoRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .locId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): InfoRetrieveParams =
-            InfoRetrieveParams(
-                checkRequired("locId", locId),
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
-            )
+            InfoRetrieveParams(locId, additionalHeaders.build(), additionalQueryParams.build())
     }
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> locId
+            0 -> locId ?: ""
             else -> ""
         }
 

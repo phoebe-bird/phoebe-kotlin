@@ -20,9 +20,24 @@ interface SpeciesGroupService {
      * together, with Falcons next to Hawks, whereas eBird follows taxonomic order.
      */
     fun list(
+        speciesGrouping: SpeciesGroupListParams.SpeciesGrouping,
+        params: SpeciesGroupListParams = SpeciesGroupListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<SpeciesGroupListResponse> =
+        list(params.toBuilder().speciesGrouping(speciesGrouping).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
         params: SpeciesGroupListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<SpeciesGroupListResponse>
+
+    /** @see [list] */
+    fun list(
+        speciesGrouping: SpeciesGroupListParams.SpeciesGrouping,
+        requestOptions: RequestOptions,
+    ): List<SpeciesGroupListResponse> =
+        list(speciesGrouping, SpeciesGroupListParams.none(), requestOptions)
 
     /**
      * A view of [SpeciesGroupService] that provides access to raw HTTP responses for each method.
@@ -35,8 +50,25 @@ interface SpeciesGroupService {
          */
         @MustBeClosed
         fun list(
+            speciesGrouping: SpeciesGroupListParams.SpeciesGrouping,
+            params: SpeciesGroupListParams = SpeciesGroupListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<SpeciesGroupListResponse>> =
+            list(params.toBuilder().speciesGrouping(speciesGrouping).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
             params: SpeciesGroupListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<SpeciesGroupListResponse>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            speciesGrouping: SpeciesGroupListParams.SpeciesGrouping,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<List<SpeciesGroupListResponse>> =
+            list(speciesGrouping, SpeciesGroupListParams.none(), requestOptions)
     }
 }

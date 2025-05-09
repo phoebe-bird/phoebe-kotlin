@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.phoebe.api.core.Enum
 import com.phoebe.api.core.JsonField
 import com.phoebe.api.core.Params
-import com.phoebe.api.core.checkRequired
 import com.phoebe.api.core.http.Headers
 import com.phoebe.api.core.http.QueryParams
 import com.phoebe.api.errors.PhoebeInvalidDataException
@@ -31,14 +30,14 @@ import java.util.Objects
  */
 class InfoRetrieveParams
 private constructor(
-    private val regionCode: String,
+    private val regionCode: String?,
     private val delim: String?,
     private val regionNameFormat: RegionNameFormat?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun regionCode(): String = regionCode
+    fun regionCode(): String? = regionCode
 
     /** The characters used to separate elements in the name. */
     fun delim(): String? = delim
@@ -54,14 +53,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [InfoRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .regionCode()
-         * ```
-         */
+        fun none(): InfoRetrieveParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [InfoRetrieveParams]. */
         fun builder() = Builder()
     }
 
@@ -82,7 +76,7 @@ private constructor(
             additionalQueryParams = infoRetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun regionCode(regionCode: String) = apply { this.regionCode = regionCode }
+        fun regionCode(regionCode: String?) = apply { this.regionCode = regionCode }
 
         /** The characters used to separate elements in the name. */
         fun delim(delim: String?) = apply { this.delim = delim }
@@ -194,17 +188,10 @@ private constructor(
          * Returns an immutable instance of [InfoRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .regionCode()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): InfoRetrieveParams =
             InfoRetrieveParams(
-                checkRequired("regionCode", regionCode),
+                regionCode,
                 delim,
                 regionNameFormat,
                 additionalHeaders.build(),
@@ -214,7 +201,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> regionCode
+            0 -> regionCode ?: ""
             else -> ""
         }
 

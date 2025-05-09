@@ -34,6 +34,13 @@ interface Top100ServiceAsync {
      * false
      */
     suspend fun retrieve(
+        d: Long,
+        params: Top100RetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<Top100RetrieveResponse> = retrieve(params.toBuilder().d(d).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: Top100RetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Top100RetrieveResponse>
@@ -47,6 +54,15 @@ interface Top100ServiceAsync {
          * Returns a raw HTTP response for `get /product/top100/{regionCode}/{y}/{m}/{d}`, but is
          * otherwise the same as [Top100ServiceAsync.retrieve].
          */
+        @MustBeClosed
+        suspend fun retrieve(
+            d: Long,
+            params: Top100RetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<Top100RetrieveResponse>> =
+            retrieve(params.toBuilder().d(d).build(), requestOptions)
+
+        /** @see [retrieve] */
         @MustBeClosed
         suspend fun retrieve(
             params: Top100RetrieveParams,

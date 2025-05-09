@@ -5,6 +5,7 @@ package com.phoebe.api.services.blocking.data.observations.geo.recent
 import com.phoebe.api.core.ClientOptions
 import com.phoebe.api.core.JsonValue
 import com.phoebe.api.core.RequestOptions
+import com.phoebe.api.core.checkRequired
 import com.phoebe.api.core.handlers.errorHandler
 import com.phoebe.api.core.handlers.jsonHandler
 import com.phoebe.api.core.handlers.withErrorHandler
@@ -42,6 +43,9 @@ class SpecieServiceImpl internal constructor(private val clientOptions: ClientOp
             params: SpecieListParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<List<Observation>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("speciesCode", params.speciesCode())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

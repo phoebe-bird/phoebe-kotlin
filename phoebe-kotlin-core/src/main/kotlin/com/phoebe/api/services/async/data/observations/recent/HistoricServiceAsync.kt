@@ -23,6 +23,13 @@ interface HistoricServiceAsync {
      * #### Notes Responses may be cached for 30 minutes
      */
     suspend fun list(
+        d: Long,
+        params: HistoricListParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<Observation> = list(params.toBuilder().d(d).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: HistoricListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation>
@@ -36,6 +43,15 @@ interface HistoricServiceAsync {
          * Returns a raw HTTP response for `get /data/obs/{regionCode}/historic/{y}/{m}/{d}`, but is
          * otherwise the same as [HistoricServiceAsync.list].
          */
+        @MustBeClosed
+        suspend fun list(
+            d: Long,
+            params: HistoricListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<Observation>> =
+            list(params.toBuilder().d(d).build(), requestOptions)
+
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             params: HistoricListParams,

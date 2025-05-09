@@ -19,9 +19,20 @@ interface FormService {
      * species that was passed in.
      */
     fun list(
+        speciesCode: String,
+        params: FormListParams = FormListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<String> = list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
         params: FormListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<String>
+
+    /** @see [list] */
+    fun list(speciesCode: String, requestOptions: RequestOptions): List<String> =
+        list(speciesCode, FormListParams.none(), requestOptions)
 
     /** A view of [FormService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -32,8 +43,24 @@ interface FormService {
          */
         @MustBeClosed
         fun list(
+            speciesCode: String,
+            params: FormListParams = FormListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<String>> =
+            list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
             params: FormListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<String>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            speciesCode: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<List<String>> = list(speciesCode, FormListParams.none(), requestOptions)
     }
 }

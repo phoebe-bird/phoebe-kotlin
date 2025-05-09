@@ -18,7 +18,7 @@ private constructor(
     private val regionCode: String,
     private val y: Long,
     private val m: Long,
-    private val d: Long,
+    private val d: Long?,
     private val maxResults: Long?,
     private val sortKey: SortKey?,
     private val additionalHeaders: Headers,
@@ -31,7 +31,7 @@ private constructor(
 
     fun m(): Long = m
 
-    fun d(): Long = d
+    fun d(): Long? = d
 
     /** Only fetch this number of checklists. */
     fun maxResults(): Long? = maxResults
@@ -55,7 +55,6 @@ private constructor(
          * .regionCode()
          * .y()
          * .m()
-         * .d()
          * ```
          */
         fun builder() = Builder()
@@ -90,7 +89,14 @@ private constructor(
 
         fun m(m: Long) = apply { this.m = m }
 
-        fun d(d: Long) = apply { this.d = d }
+        fun d(d: Long?) = apply { this.d = d }
+
+        /**
+         * Alias for [Builder.d].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun d(d: Long) = d(d as Long?)
 
         /** Only fetch this number of checklists. */
         fun maxResults(maxResults: Long?) = apply { this.maxResults = maxResults }
@@ -213,7 +219,6 @@ private constructor(
          * .regionCode()
          * .y()
          * .m()
-         * .d()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -223,7 +228,7 @@ private constructor(
                 checkRequired("regionCode", regionCode),
                 checkRequired("y", y),
                 checkRequired("m", m),
-                checkRequired("d", d),
+                d,
                 maxResults,
                 sortKey,
                 additionalHeaders.build(),
@@ -236,7 +241,7 @@ private constructor(
             0 -> regionCode
             1 -> y.toString()
             2 -> m.toString()
-            3 -> d.toString()
+            3 -> d?.toString() ?: ""
             else -> ""
         }
 

@@ -23,9 +23,23 @@ interface HotspotServiceAsync {
 
     /** Hotspots in a region */
     suspend fun list(
+        regionCode: String,
+        params: HotspotListParams = HotspotListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<HotspotListResponse> =
+        list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: HotspotListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<HotspotListResponse>
+
+    /** @see [list] */
+    suspend fun list(
+        regionCode: String,
+        requestOptions: RequestOptions,
+    ): List<HotspotListResponse> = list(regionCode, HotspotListParams.none(), requestOptions)
 
     /**
      * A view of [HotspotServiceAsync] that provides access to raw HTTP responses for each method.
@@ -42,8 +56,25 @@ interface HotspotServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            regionCode: String,
+            params: HotspotListParams = HotspotListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<HotspotListResponse>> =
+            list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: HotspotListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<HotspotListResponse>>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            regionCode: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<List<HotspotListResponse>> =
+            list(regionCode, HotspotListParams.none(), requestOptions)
     }
 }

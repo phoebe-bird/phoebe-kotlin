@@ -22,6 +22,14 @@ interface ListServiceAsync {
      * 'world' as a region code.
      */
     suspend fun list(
+        parentRegionCode: String,
+        params: ListListParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<ListListResponse> =
+        list(params.toBuilder().parentRegionCode(parentRegionCode).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: ListListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<ListListResponse>
@@ -33,6 +41,15 @@ interface ListServiceAsync {
          * Returns a raw HTTP response for `get /ref/region/list/{regionType}/{parentRegionCode}`,
          * but is otherwise the same as [ListServiceAsync.list].
          */
+        @MustBeClosed
+        suspend fun list(
+            parentRegionCode: String,
+            params: ListListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<ListListResponse>> =
+            list(params.toBuilder().parentRegionCode(parentRegionCode).build(), requestOptions)
+
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             params: ListListParams,

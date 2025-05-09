@@ -20,9 +20,24 @@ interface SpeciesGroupServiceAsync {
      * together, with Falcons next to Hawks, whereas eBird follows taxonomic order.
      */
     suspend fun list(
+        speciesGrouping: SpeciesGroupListParams.SpeciesGrouping,
+        params: SpeciesGroupListParams = SpeciesGroupListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<SpeciesGroupListResponse> =
+        list(params.toBuilder().speciesGrouping(speciesGrouping).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: SpeciesGroupListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<SpeciesGroupListResponse>
+
+    /** @see [list] */
+    suspend fun list(
+        speciesGrouping: SpeciesGroupListParams.SpeciesGrouping,
+        requestOptions: RequestOptions,
+    ): List<SpeciesGroupListResponse> =
+        list(speciesGrouping, SpeciesGroupListParams.none(), requestOptions)
 
     /**
      * A view of [SpeciesGroupServiceAsync] that provides access to raw HTTP responses for each
@@ -36,8 +51,25 @@ interface SpeciesGroupServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            speciesGrouping: SpeciesGroupListParams.SpeciesGrouping,
+            params: SpeciesGroupListParams = SpeciesGroupListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<SpeciesGroupListResponse>> =
+            list(params.toBuilder().speciesGrouping(speciesGrouping).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: SpeciesGroupListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<SpeciesGroupListResponse>>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            speciesGrouping: SpeciesGroupListParams.SpeciesGrouping,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<List<SpeciesGroupListResponse>> =
+            list(speciesGrouping, SpeciesGroupListParams.none(), requestOptions)
     }
 }

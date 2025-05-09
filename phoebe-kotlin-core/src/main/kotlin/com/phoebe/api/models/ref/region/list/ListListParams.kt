@@ -21,7 +21,7 @@ import java.util.Objects
 class ListListParams
 private constructor(
     private val regionType: String,
-    private val parentRegionCode: String,
+    private val parentRegionCode: String?,
     private val fmt: Fmt?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -29,7 +29,7 @@ private constructor(
 
     fun regionType(): String = regionType
 
-    fun parentRegionCode(): String = parentRegionCode
+    fun parentRegionCode(): String? = parentRegionCode
 
     /** Fetch the records in CSV or JSON format. */
     fun fmt(): Fmt? = fmt
@@ -48,7 +48,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .regionType()
-         * .parentRegionCode()
          * ```
          */
         fun builder() = Builder()
@@ -73,7 +72,7 @@ private constructor(
 
         fun regionType(regionType: String) = apply { this.regionType = regionType }
 
-        fun parentRegionCode(parentRegionCode: String) = apply {
+        fun parentRegionCode(parentRegionCode: String?) = apply {
             this.parentRegionCode = parentRegionCode
         }
 
@@ -186,7 +185,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .regionType()
-         * .parentRegionCode()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -194,7 +192,7 @@ private constructor(
         fun build(): ListListParams =
             ListListParams(
                 checkRequired("regionType", regionType),
-                checkRequired("parentRegionCode", parentRegionCode),
+                parentRegionCode,
                 fmt,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -204,7 +202,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> regionType
-            1 -> parentRegionCode
+            1 -> parentRegionCode ?: ""
             else -> ""
         }
 

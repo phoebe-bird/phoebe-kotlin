@@ -22,9 +22,20 @@ interface NotableServiceAsync {
      * visitor.
      */
     suspend fun list(
+        regionCode: String,
+        params: NotableListParams = NotableListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<Observation> = list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: NotableListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation>
+
+    /** @see [list] */
+    suspend fun list(regionCode: String, requestOptions: RequestOptions): List<Observation> =
+        list(regionCode, NotableListParams.none(), requestOptions)
 
     /**
      * A view of [NotableServiceAsync] that provides access to raw HTTP responses for each method.
@@ -37,8 +48,25 @@ interface NotableServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            regionCode: String,
+            params: NotableListParams = NotableListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<Observation>> =
+            list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: NotableListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<Observation>>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            regionCode: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<List<Observation>> =
+            list(regionCode, NotableListParams.none(), requestOptions)
     }
 }
