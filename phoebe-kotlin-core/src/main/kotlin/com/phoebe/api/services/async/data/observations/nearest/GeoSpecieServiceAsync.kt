@@ -21,6 +21,13 @@ interface GeoSpecieServiceAsync {
      * species code from the GET eBird Taxonomy end-point.
      */
     suspend fun list(
+        speciesCode: String,
+        params: GeoSpecieListParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<Observation> = list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: GeoSpecieListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation>
@@ -34,6 +41,15 @@ interface GeoSpecieServiceAsync {
          * Returns a raw HTTP response for `get /data/nearest/geo/recent/{speciesCode}`, but is
          * otherwise the same as [GeoSpecieServiceAsync.list].
          */
+        @MustBeClosed
+        suspend fun list(
+            speciesCode: String,
+            params: GeoSpecieListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<Observation>> =
+            list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
+
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             params: GeoSpecieListParams,

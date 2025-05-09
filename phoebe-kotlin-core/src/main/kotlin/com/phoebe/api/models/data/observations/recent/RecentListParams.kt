@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.phoebe.api.core.Enum
 import com.phoebe.api.core.JsonField
 import com.phoebe.api.core.Params
-import com.phoebe.api.core.checkRequired
 import com.phoebe.api.core.http.Headers
 import com.phoebe.api.core.http.QueryParams
 import com.phoebe.api.core.toImmutable
@@ -20,7 +19,7 @@ import java.util.Objects
  */
 class RecentListParams
 private constructor(
-    private val regionCode: String,
+    private val regionCode: String?,
     private val back: Long?,
     private val cat: Cat?,
     private val hotspot: Boolean?,
@@ -32,7 +31,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun regionCode(): String = regionCode
+    fun regionCode(): String? = regionCode
 
     /** The number of days back to fetch observations. */
     fun back(): Long? = back
@@ -63,14 +62,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [RecentListParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .regionCode()
-         * ```
-         */
+        fun none(): RecentListParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [RecentListParams]. */
         fun builder() = Builder()
     }
 
@@ -101,7 +95,7 @@ private constructor(
             additionalQueryParams = recentListParams.additionalQueryParams.toBuilder()
         }
 
-        fun regionCode(regionCode: String) = apply { this.regionCode = regionCode }
+        fun regionCode(regionCode: String?) = apply { this.regionCode = regionCode }
 
         /** The number of days back to fetch observations. */
         fun back(back: Long?) = apply { this.back = back }
@@ -264,17 +258,10 @@ private constructor(
          * Returns an immutable instance of [RecentListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .regionCode()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): RecentListParams =
             RecentListParams(
-                checkRequired("regionCode", regionCode),
+                regionCode,
                 back,
                 cat,
                 hotspot,
@@ -289,7 +276,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> regionCode
+            0 -> regionCode ?: ""
             else -> ""
         }
 

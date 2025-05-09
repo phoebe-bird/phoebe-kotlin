@@ -15,7 +15,7 @@ import java.util.Objects
  */
 class GeoSpecieListParams
 private constructor(
-    private val speciesCode: String,
+    private val speciesCode: String?,
     private val lat: Double,
     private val lng: Double,
     private val back: Long?,
@@ -28,7 +28,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun speciesCode(): String = speciesCode
+    fun speciesCode(): String? = speciesCode
 
     fun lat(): Double = lat
 
@@ -65,7 +65,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .speciesCode()
          * .lat()
          * .lng()
          * ```
@@ -102,7 +101,7 @@ private constructor(
             additionalQueryParams = geoSpecieListParams.additionalQueryParams.toBuilder()
         }
 
-        fun speciesCode(speciesCode: String) = apply { this.speciesCode = speciesCode }
+        fun speciesCode(speciesCode: String?) = apply { this.speciesCode = speciesCode }
 
         fun lat(lat: Double) = apply { this.lat = lat }
 
@@ -269,7 +268,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .speciesCode()
          * .lat()
          * .lng()
          * ```
@@ -278,7 +276,7 @@ private constructor(
          */
         fun build(): GeoSpecieListParams =
             GeoSpecieListParams(
-                checkRequired("speciesCode", speciesCode),
+                speciesCode,
                 checkRequired("lat", lat),
                 checkRequired("lng", lng),
                 back,
@@ -294,7 +292,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> speciesCode
+            0 -> speciesCode ?: ""
             else -> ""
         }
 

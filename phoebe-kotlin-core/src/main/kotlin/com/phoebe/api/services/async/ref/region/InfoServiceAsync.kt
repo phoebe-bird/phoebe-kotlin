@@ -33,9 +33,21 @@ interface InfoServiceAsync {
      * |revdetailed   |return the detailed description in reverse|US, New York, Madison County    |
      */
     suspend fun retrieve(
+        regionCode: String,
+        params: InfoRetrieveParams = InfoRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): InfoRetrieveResponse =
+        retrieve(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: InfoRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InfoRetrieveResponse
+
+    /** @see [retrieve] */
+    suspend fun retrieve(regionCode: String, requestOptions: RequestOptions): InfoRetrieveResponse =
+        retrieve(regionCode, InfoRetrieveParams.none(), requestOptions)
 
     /** A view of [InfoServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -46,8 +58,25 @@ interface InfoServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            regionCode: String,
+            params: InfoRetrieveParams = InfoRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InfoRetrieveResponse> =
+            retrieve(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: InfoRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InfoRetrieveResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            regionCode: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<InfoRetrieveResponse> =
+            retrieve(regionCode, InfoRetrieveParams.none(), requestOptions)
     }
 }

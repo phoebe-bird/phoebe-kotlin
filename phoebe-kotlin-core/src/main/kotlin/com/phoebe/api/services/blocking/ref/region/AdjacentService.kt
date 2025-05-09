@@ -20,9 +20,21 @@ interface AdjacentService {
      * subnational2 codes in the United States, New Zealand, or Mexico are currently supported
      */
     fun list(
+        regionCode: String,
+        params: AdjacentListParams = AdjacentListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<AdjacentListResponse> =
+        list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
         params: AdjacentListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<AdjacentListResponse>
+
+    /** @see [list] */
+    fun list(regionCode: String, requestOptions: RequestOptions): List<AdjacentListResponse> =
+        list(regionCode, AdjacentListParams.none(), requestOptions)
 
     /** A view of [AdjacentService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -33,8 +45,25 @@ interface AdjacentService {
          */
         @MustBeClosed
         fun list(
+            regionCode: String,
+            params: AdjacentListParams = AdjacentListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<AdjacentListResponse>> =
+            list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
             params: AdjacentListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<AdjacentListResponse>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            regionCode: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<List<AdjacentListResponse>> =
+            list(regionCode, AdjacentListParams.none(), requestOptions)
     }
 }

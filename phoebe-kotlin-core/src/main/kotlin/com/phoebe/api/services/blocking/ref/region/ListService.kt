@@ -22,6 +22,14 @@ interface ListService {
      * 'world' as a region code.
      */
     fun list(
+        parentRegionCode: String,
+        params: ListListParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<ListListResponse> =
+        list(params.toBuilder().parentRegionCode(parentRegionCode).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
         params: ListListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<ListListResponse>
@@ -33,6 +41,15 @@ interface ListService {
          * Returns a raw HTTP response for `get /ref/region/list/{regionType}/{parentRegionCode}`,
          * but is otherwise the same as [ListService.list].
          */
+        @MustBeClosed
+        fun list(
+            parentRegionCode: String,
+            params: ListListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<ListListResponse>> =
+            list(params.toBuilder().parentRegionCode(parentRegionCode).build(), requestOptions)
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ListListParams,

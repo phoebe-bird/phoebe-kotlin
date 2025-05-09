@@ -4,7 +4,6 @@ package com.phoebe.api.services.async.ref.hotspot
 
 import com.phoebe.api.TestServerExtension
 import com.phoebe.api.client.okhttp.PhoebeOkHttpClientAsync
-import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -20,7 +19,7 @@ internal class InfoServiceAsyncTest {
                 .build()
         val infoServiceAsync = client.ref().hotspot().info()
 
-        val info = infoServiceAsync.retrieve(InfoRetrieveParams.builder().locId("locId").build())
+        val info = infoServiceAsync.retrieve("locId")
 
         info.validate()
     }

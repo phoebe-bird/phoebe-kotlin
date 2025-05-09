@@ -31,6 +31,13 @@ interface SpecieService {
      * complete set of species code from the GET eBird Taxonomy end-point.
      */
     fun list(
+        speciesCode: String,
+        params: SpecieListParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<Observation> = list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
         params: SpecieListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation>
@@ -42,6 +49,15 @@ interface SpecieService {
          * Returns a raw HTTP response for `get /data/obs/geo/recent/{speciesCode}`, but is
          * otherwise the same as [SpecieService.list].
          */
+        @MustBeClosed
+        fun list(
+            speciesCode: String,
+            params: SpecieListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<Observation>> =
+            list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: SpecieListParams,

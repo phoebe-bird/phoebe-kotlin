@@ -24,9 +24,20 @@ interface ChecklistServiceAsync {
      * _subId_, _subnational1Code_ and _present_.
      */
     suspend fun view(
+        subId: String,
+        params: ChecklistViewParams = ChecklistViewParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ChecklistViewResponse = view(params.toBuilder().subId(subId).build(), requestOptions)
+
+    /** @see [view] */
+    suspend fun view(
         params: ChecklistViewParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ChecklistViewResponse
+
+    /** @see [view] */
+    suspend fun view(subId: String, requestOptions: RequestOptions): ChecklistViewResponse =
+        view(subId, ChecklistViewParams.none(), requestOptions)
 
     /**
      * A view of [ChecklistServiceAsync] that provides access to raw HTTP responses for each method.
@@ -39,8 +50,25 @@ interface ChecklistServiceAsync {
          */
         @MustBeClosed
         suspend fun view(
+            subId: String,
+            params: ChecklistViewParams = ChecklistViewParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ChecklistViewResponse> =
+            view(params.toBuilder().subId(subId).build(), requestOptions)
+
+        /** @see [view] */
+        @MustBeClosed
+        suspend fun view(
             params: ChecklistViewParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ChecklistViewResponse>
+
+        /** @see [view] */
+        @MustBeClosed
+        suspend fun view(
+            subId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ChecklistViewResponse> =
+            view(subId, ChecklistViewParams.none(), requestOptions)
     }
 }

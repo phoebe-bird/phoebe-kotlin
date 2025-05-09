@@ -30,9 +30,20 @@ interface RecentServiceAsync {
      * region specified.
      */
     suspend fun list(
+        regionCode: String,
+        params: RecentListParams = RecentListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<Observation> = list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: RecentListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation>
+
+    /** @see [list] */
+    suspend fun list(regionCode: String, requestOptions: RequestOptions): List<Observation> =
+        list(regionCode, RecentListParams.none(), requestOptions)
 
     /**
      * A view of [RecentServiceAsync] that provides access to raw HTTP responses for each method.
@@ -51,8 +62,25 @@ interface RecentServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            regionCode: String,
+            params: RecentListParams = RecentListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<Observation>> =
+            list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: RecentListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<Observation>>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            regionCode: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<List<Observation>> =
+            list(regionCode, RecentListParams.none(), requestOptions)
     }
 }

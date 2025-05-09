@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.phoebe.api.core.Enum
 import com.phoebe.api.core.JsonField
 import com.phoebe.api.core.Params
-import com.phoebe.api.core.checkRequired
 import com.phoebe.api.core.http.Headers
 import com.phoebe.api.core.http.QueryParams
 import com.phoebe.api.errors.PhoebeInvalidDataException
@@ -15,14 +14,14 @@ import java.util.Objects
 /** Hotspots in a region */
 class HotspotListParams
 private constructor(
-    private val regionCode: String,
+    private val regionCode: String?,
     private val back: Long?,
     private val fmt: Fmt?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun regionCode(): String = regionCode
+    fun regionCode(): String? = regionCode
 
     /** The number of days back to fetch hotspots. */
     fun back(): Long? = back
@@ -38,14 +37,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [HotspotListParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .regionCode()
-         * ```
-         */
+        fun none(): HotspotListParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [HotspotListParams]. */
         fun builder() = Builder()
     }
 
@@ -66,7 +60,7 @@ private constructor(
             additionalQueryParams = hotspotListParams.additionalQueryParams.toBuilder()
         }
 
-        fun regionCode(regionCode: String) = apply { this.regionCode = regionCode }
+        fun regionCode(regionCode: String?) = apply { this.regionCode = regionCode }
 
         /** The number of days back to fetch hotspots. */
         fun back(back: Long?) = apply { this.back = back }
@@ -183,17 +177,10 @@ private constructor(
          * Returns an immutable instance of [HotspotListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .regionCode()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): HotspotListParams =
             HotspotListParams(
-                checkRequired("regionCode", regionCode),
+                regionCode,
                 back,
                 fmt,
                 additionalHeaders.build(),
@@ -203,7 +190,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> regionCode
+            0 -> regionCode ?: ""
             else -> ""
         }
 

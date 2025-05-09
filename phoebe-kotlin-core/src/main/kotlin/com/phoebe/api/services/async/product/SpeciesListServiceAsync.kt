@@ -21,9 +21,20 @@ interface SpeciesListServiceAsync {
      * larger regions.
      */
     suspend fun list(
+        regionCode: String,
+        params: SpeciesListListParams = SpeciesListListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): List<String> = list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: SpeciesListListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<String>
+
+    /** @see [list] */
+    suspend fun list(regionCode: String, requestOptions: RequestOptions): List<String> =
+        list(regionCode, SpeciesListListParams.none(), requestOptions)
 
     /**
      * A view of [SpeciesListServiceAsync] that provides access to raw HTTP responses for each
@@ -37,8 +48,25 @@ interface SpeciesListServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            regionCode: String,
+            params: SpeciesListListParams = SpeciesListListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<List<String>> =
+            list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: SpeciesListListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<String>>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            regionCode: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<List<String>> =
+            list(regionCode, SpeciesListListParams.none(), requestOptions)
     }
 }

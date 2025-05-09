@@ -22,6 +22,13 @@ interface StatServiceAsync {
      * #### Notes The results are updated every 15 minutes.
      */
     suspend fun retrieve(
+        d: Long,
+        params: StatRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): StatRetrieveResponse = retrieve(params.toBuilder().d(d).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: StatRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatRetrieveResponse
@@ -33,6 +40,15 @@ interface StatServiceAsync {
          * Returns a raw HTTP response for `get /product/stats/{regionCode}/{y}/{m}/{d}`, but is
          * otherwise the same as [StatServiceAsync.retrieve].
          */
+        @MustBeClosed
+        suspend fun retrieve(
+            d: Long,
+            params: StatRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<StatRetrieveResponse> =
+            retrieve(params.toBuilder().d(d).build(), requestOptions)
+
+        /** @see [retrieve] */
         @MustBeClosed
         suspend fun retrieve(
             params: StatRetrieveParams,
