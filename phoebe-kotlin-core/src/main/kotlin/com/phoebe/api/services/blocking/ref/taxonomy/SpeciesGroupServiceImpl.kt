@@ -53,6 +53,7 @@ class SpeciesGroupServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("ref", "sppgroup", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)

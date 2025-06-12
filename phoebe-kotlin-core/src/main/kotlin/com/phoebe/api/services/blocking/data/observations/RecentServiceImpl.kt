@@ -85,6 +85,7 @@ class RecentServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("data", "obs", params._pathParam(0), "recent")
                     .build()
                     .prepare(clientOptions, params)

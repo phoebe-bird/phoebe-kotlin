@@ -53,6 +53,7 @@ class AdjacentServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("ref", "adjacent", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
