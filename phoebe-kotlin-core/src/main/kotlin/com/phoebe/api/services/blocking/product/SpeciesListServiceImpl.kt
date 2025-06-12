@@ -48,6 +48,7 @@ class SpeciesListServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("product", "spplist", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
