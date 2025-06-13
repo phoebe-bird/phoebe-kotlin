@@ -25,6 +25,9 @@ class RegionServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): RegionService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): RegionService =
+        RegionServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun adjacent(): AdjacentService = adjacent
 
     override fun info(): InfoService = info
@@ -45,6 +48,11 @@ class RegionServiceImpl internal constructor(private val clientOptions: ClientOp
         private val list: ListService.WithRawResponse by lazy {
             ListServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): RegionService.WithRawResponse =
+            RegionServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun adjacent(): AdjacentService.WithRawResponse = adjacent
 

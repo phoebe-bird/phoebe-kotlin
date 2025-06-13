@@ -17,6 +17,9 @@ class NearestServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): NearestService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): NearestService =
+        NearestServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun geoSpecies(): GeoSpecieService = geoSpecies
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -25,6 +28,13 @@ class NearestServiceImpl internal constructor(private val clientOptions: ClientO
         private val geoSpecies: GeoSpecieService.WithRawResponse by lazy {
             GeoSpecieServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): NearestService.WithRawResponse =
+            NearestServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun geoSpecies(): GeoSpecieService.WithRawResponse = geoSpecies
     }

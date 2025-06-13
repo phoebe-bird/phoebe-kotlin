@@ -27,6 +27,9 @@ class Top100ServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
     override fun withRawResponse(): Top100ServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): Top100ServiceAsync =
+        Top100ServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: Top100RetrieveParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class Top100ServiceAsyncImpl internal constructor(private val clientOptions: Cli
         Top100ServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): Top100ServiceAsync.WithRawResponse =
+            Top100ServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<List<Top100RetrieveResponse>> =
             jsonHandler<List<Top100RetrieveResponse>>(clientOptions.jsonMapper)

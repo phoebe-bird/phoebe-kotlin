@@ -27,6 +27,9 @@ class SpeciesGroupServiceImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): SpeciesGroupService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SpeciesGroupService =
+        SpeciesGroupServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(
         params: SpeciesGroupListParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class SpeciesGroupServiceImpl internal constructor(private val clientOptions: Cl
         SpeciesGroupService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SpeciesGroupService.WithRawResponse =
+            SpeciesGroupServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<List<SpeciesGroupListResponse>> =
             jsonHandler<List<SpeciesGroupListResponse>>(clientOptions.jsonMapper)

@@ -35,6 +35,9 @@ class HotspotServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): HotspotServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): HotspotServiceAsync =
+        HotspotServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun geo(): GeoServiceAsync = geo
 
     override fun info(): InfoServiceAsync = info
@@ -58,6 +61,13 @@ class HotspotServiceAsyncImpl internal constructor(private val clientOptions: Cl
         private val info: InfoServiceAsync.WithRawResponse by lazy {
             InfoServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): HotspotServiceAsync.WithRawResponse =
+            HotspotServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun geo(): GeoServiceAsync.WithRawResponse = geo
 

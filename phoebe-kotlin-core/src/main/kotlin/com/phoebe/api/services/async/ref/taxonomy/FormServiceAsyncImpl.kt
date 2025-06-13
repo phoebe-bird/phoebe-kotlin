@@ -26,6 +26,9 @@ class FormServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): FormServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): FormServiceAsync =
+        FormServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: FormListParams,
         requestOptions: RequestOptions,
@@ -37,6 +40,13 @@ class FormServiceAsyncImpl internal constructor(private val clientOptions: Clien
         FormServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): FormServiceAsync.WithRawResponse =
+            FormServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<List<String>> =
             jsonHandler<List<String>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

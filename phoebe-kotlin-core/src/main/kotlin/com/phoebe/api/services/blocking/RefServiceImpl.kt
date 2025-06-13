@@ -24,6 +24,9 @@ class RefServiceImpl internal constructor(private val clientOptions: ClientOptio
 
     override fun withRawResponse(): RefService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): RefService =
+        RefServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun region(): RegionService = region
 
     override fun hotspot(): HotspotService = hotspot
@@ -44,6 +47,11 @@ class RefServiceImpl internal constructor(private val clientOptions: ClientOptio
         private val taxonomy: TaxonomyService.WithRawResponse by lazy {
             TaxonomyServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): RefService.WithRawResponse =
+            RefServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun region(): RegionService.WithRawResponse = region
 

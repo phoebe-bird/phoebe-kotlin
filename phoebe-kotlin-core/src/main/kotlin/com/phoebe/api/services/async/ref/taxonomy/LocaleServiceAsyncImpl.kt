@@ -26,6 +26,9 @@ class LocaleServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
     override fun withRawResponse(): LocaleServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): LocaleServiceAsync =
+        LocaleServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: LocaleListParams,
         requestOptions: RequestOptions,
@@ -37,6 +40,13 @@ class LocaleServiceAsyncImpl internal constructor(private val clientOptions: Cli
         LocaleServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): LocaleServiceAsync.WithRawResponse =
+            LocaleServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<List<LocaleListResponse>> =
             jsonHandler<List<LocaleListResponse>>(clientOptions.jsonMapper)

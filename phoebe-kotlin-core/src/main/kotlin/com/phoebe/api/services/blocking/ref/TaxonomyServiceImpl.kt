@@ -35,6 +35,9 @@ class TaxonomyServiceImpl internal constructor(private val clientOptions: Client
 
     override fun withRawResponse(): TaxonomyService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TaxonomyService =
+        TaxonomyServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun ebird(): EbirdService = ebird
 
     override fun forms(): FormService = forms
@@ -67,6 +70,13 @@ class TaxonomyServiceImpl internal constructor(private val clientOptions: Client
         private val speciesGroups: SpeciesGroupService.WithRawResponse by lazy {
             SpeciesGroupServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): TaxonomyService.WithRawResponse =
+            TaxonomyServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun ebird(): EbirdService.WithRawResponse = ebird
 

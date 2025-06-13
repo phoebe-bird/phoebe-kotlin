@@ -3,6 +3,7 @@
 package com.phoebe.api.services.async.product
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.phoebe.api.core.ClientOptions
 import com.phoebe.api.core.RequestOptions
 import com.phoebe.api.core.http.HttpResponseFor
 import com.phoebe.api.models.product.specieslist.SpeciesListListParams
@@ -13,6 +14,13 @@ interface SpeciesListServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SpeciesListServiceAsync
 
     /**
      * Get a list of species codes ever seen in a region, in taxonomic order (species taxa only)
@@ -41,6 +49,15 @@ interface SpeciesListServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SpeciesListServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /product/spplist/{regionCode}`, but is otherwise the

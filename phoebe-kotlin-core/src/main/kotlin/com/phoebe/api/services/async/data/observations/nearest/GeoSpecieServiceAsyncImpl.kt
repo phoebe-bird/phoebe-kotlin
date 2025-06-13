@@ -27,6 +27,9 @@ class GeoSpecieServiceAsyncImpl internal constructor(private val clientOptions: 
 
     override fun withRawResponse(): GeoSpecieServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): GeoSpecieServiceAsync =
+        GeoSpecieServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: GeoSpecieListParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class GeoSpecieServiceAsyncImpl internal constructor(private val clientOptions: 
         GeoSpecieServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): GeoSpecieServiceAsync.WithRawResponse =
+            GeoSpecieServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<List<Observation>> =
             jsonHandler<List<Observation>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -40,6 +40,9 @@ class PhoebeClientAsyncImpl(private val clientOptions: ClientOptions) : PhoebeCl
 
     override fun withRawResponse(): PhoebeClientAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PhoebeClientAsync =
+        PhoebeClientAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun data(): DataServiceAsync = data
 
     override fun product(): ProductServiceAsync = product
@@ -62,6 +65,13 @@ class PhoebeClientAsyncImpl(private val clientOptions: ClientOptions) : PhoebeCl
         private val ref: RefServiceAsync.WithRawResponse by lazy {
             RefServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): PhoebeClientAsync.WithRawResponse =
+            PhoebeClientAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun data(): DataServiceAsync.WithRawResponse = data
 

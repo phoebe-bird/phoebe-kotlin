@@ -27,6 +27,9 @@ class StatServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): StatServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): StatServiceAsync =
+        StatServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: StatRetrieveParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class StatServiceAsyncImpl internal constructor(private val clientOptions: Clien
         StatServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): StatServiceAsync.WithRawResponse =
+            StatServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<StatRetrieveResponse> =
             jsonHandler<StatRetrieveResponse>(clientOptions.jsonMapper)

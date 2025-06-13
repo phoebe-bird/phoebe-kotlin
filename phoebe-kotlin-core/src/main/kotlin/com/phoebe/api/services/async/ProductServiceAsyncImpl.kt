@@ -37,6 +37,9 @@ class ProductServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): ProductServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ProductServiceAsync =
+        ProductServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun lists(): ListServiceAsync = lists
 
     override fun top100(): Top100ServiceAsync = top100
@@ -69,6 +72,13 @@ class ProductServiceAsyncImpl internal constructor(private val clientOptions: Cl
         private val checklist: ChecklistServiceAsync.WithRawResponse by lazy {
             ChecklistServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ProductServiceAsync.WithRawResponse =
+            ProductServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun lists(): ListServiceAsync.WithRawResponse = lists
 

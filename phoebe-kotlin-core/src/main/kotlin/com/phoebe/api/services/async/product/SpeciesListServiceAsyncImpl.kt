@@ -26,6 +26,9 @@ class SpeciesListServiceAsyncImpl internal constructor(private val clientOptions
 
     override fun withRawResponse(): SpeciesListServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SpeciesListServiceAsync =
+        SpeciesListServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: SpeciesListListParams,
         requestOptions: RequestOptions,
@@ -37,6 +40,13 @@ class SpeciesListServiceAsyncImpl internal constructor(private val clientOptions
         SpeciesListServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SpeciesListServiceAsync.WithRawResponse =
+            SpeciesListServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<List<String>> =
             jsonHandler<List<String>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

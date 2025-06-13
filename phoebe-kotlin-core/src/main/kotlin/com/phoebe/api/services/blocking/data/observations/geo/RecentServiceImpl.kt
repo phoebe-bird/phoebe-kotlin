@@ -34,6 +34,9 @@ class RecentServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): RecentService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): RecentService =
+        RecentServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun species(): SpecieService = species
 
     override fun notable(): NotableService = notable
@@ -54,6 +57,11 @@ class RecentServiceImpl internal constructor(private val clientOptions: ClientOp
         private val notable: NotableService.WithRawResponse by lazy {
             NotableServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): RecentService.WithRawResponse =
+            RecentServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun species(): SpecieService.WithRawResponse = species
 

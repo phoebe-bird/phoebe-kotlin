@@ -26,6 +26,9 @@ class LocaleServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): LocaleService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): LocaleService =
+        LocaleServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(
         params: LocaleListParams,
         requestOptions: RequestOptions,
@@ -37,6 +40,11 @@ class LocaleServiceImpl internal constructor(private val clientOptions: ClientOp
         LocaleService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): LocaleService.WithRawResponse =
+            LocaleServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         private val listHandler: Handler<List<LocaleListResponse>> =
             jsonHandler<List<LocaleListResponse>>(clientOptions.jsonMapper)

@@ -30,6 +30,9 @@ class ListServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withRawResponse(): ListService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ListService =
+        ListServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun historical(): HistoricalService = historical
 
     override fun retrieve(
@@ -47,6 +50,11 @@ class ListServiceImpl internal constructor(private val clientOptions: ClientOpti
         private val historical: HistoricalService.WithRawResponse by lazy {
             HistoricalServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ListService.WithRawResponse =
+            ListServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun historical(): HistoricalService.WithRawResponse = historical
 

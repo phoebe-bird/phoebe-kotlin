@@ -25,6 +25,9 @@ class RegionServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
     override fun withRawResponse(): RegionServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): RegionServiceAsync =
+        RegionServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun adjacent(): AdjacentServiceAsync = adjacent
 
     override fun info(): InfoServiceAsync = info
@@ -45,6 +48,13 @@ class RegionServiceAsyncImpl internal constructor(private val clientOptions: Cli
         private val list: ListServiceAsync.WithRawResponse by lazy {
             ListServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): RegionServiceAsync.WithRawResponse =
+            RegionServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun adjacent(): AdjacentServiceAsync.WithRawResponse = adjacent
 

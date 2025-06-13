@@ -26,6 +26,9 @@ class InfoServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withRawResponse(): InfoService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): InfoService =
+        InfoServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: InfoRetrieveParams,
         requestOptions: RequestOptions,
@@ -37,6 +40,11 @@ class InfoServiceImpl internal constructor(private val clientOptions: ClientOpti
         InfoService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): InfoService.WithRawResponse =
+            InfoServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         private val retrieveHandler: Handler<InfoRetrieveResponse> =
             jsonHandler<InfoRetrieveResponse>(clientOptions.jsonMapper)

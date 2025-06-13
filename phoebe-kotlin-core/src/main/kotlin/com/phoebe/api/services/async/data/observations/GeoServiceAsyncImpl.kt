@@ -17,6 +17,9 @@ class GeoServiceAsyncImpl internal constructor(private val clientOptions: Client
 
     override fun withRawResponse(): GeoServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): GeoServiceAsync =
+        GeoServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun recent(): RecentServiceAsync = recent
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -25,6 +28,13 @@ class GeoServiceAsyncImpl internal constructor(private val clientOptions: Client
         private val recent: RecentServiceAsync.WithRawResponse by lazy {
             RecentServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): GeoServiceAsync.WithRawResponse =
+            GeoServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun recent(): RecentServiceAsync.WithRawResponse = recent
     }

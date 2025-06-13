@@ -27,6 +27,9 @@ class SpecieServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): SpecieService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SpecieService =
+        SpecieServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: SpecieRetrieveParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,11 @@ class SpecieServiceImpl internal constructor(private val clientOptions: ClientOp
         SpecieService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SpecieService.WithRawResponse =
+            SpecieServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         private val retrieveHandler: Handler<List<Observation>> =
             jsonHandler<List<Observation>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

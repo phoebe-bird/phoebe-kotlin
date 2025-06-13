@@ -27,6 +27,9 @@ class GeoSpecieServiceImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): GeoSpecieService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): GeoSpecieService =
+        GeoSpecieServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(
         params: GeoSpecieListParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class GeoSpecieServiceImpl internal constructor(private val clientOptions: Clien
         GeoSpecieService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): GeoSpecieService.WithRawResponse =
+            GeoSpecieServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<List<Observation>> =
             jsonHandler<List<Observation>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

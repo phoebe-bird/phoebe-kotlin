@@ -34,6 +34,9 @@ class RecentServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
     override fun withRawResponse(): RecentServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): RecentServiceAsync =
+        RecentServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun species(): SpecieServiceAsync = species
 
     override fun notable(): NotableServiceAsync = notable
@@ -57,6 +60,13 @@ class RecentServiceAsyncImpl internal constructor(private val clientOptions: Cli
         private val notable: NotableServiceAsync.WithRawResponse by lazy {
             NotableServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): RecentServiceAsync.WithRawResponse =
+            RecentServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun species(): SpecieServiceAsync.WithRawResponse = species
 

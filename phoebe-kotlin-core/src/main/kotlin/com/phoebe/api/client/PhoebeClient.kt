@@ -2,6 +2,7 @@
 
 package com.phoebe.api.client
 
+import com.phoebe.api.core.ClientOptions
 import com.phoebe.api.services.blocking.DataService
 import com.phoebe.api.services.blocking.ProductService
 import com.phoebe.api.services.blocking.RefService
@@ -35,6 +36,13 @@ interface PhoebeClient {
      */
     fun withRawResponse(): WithRawResponse
 
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PhoebeClient
+
     fun data(): DataService
 
     fun product(): ProductService
@@ -56,6 +64,13 @@ interface PhoebeClient {
 
     /** A view of [PhoebeClient] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PhoebeClient.WithRawResponse
 
         fun data(): DataService.WithRawResponse
 

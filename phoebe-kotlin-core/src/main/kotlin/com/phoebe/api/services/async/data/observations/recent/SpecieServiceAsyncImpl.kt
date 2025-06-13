@@ -27,6 +27,9 @@ class SpecieServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
     override fun withRawResponse(): SpecieServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SpecieServiceAsync =
+        SpecieServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: SpecieRetrieveParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class SpecieServiceAsyncImpl internal constructor(private val clientOptions: Cli
         SpecieServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SpecieServiceAsync.WithRawResponse =
+            SpecieServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<List<Observation>> =
             jsonHandler<List<Observation>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

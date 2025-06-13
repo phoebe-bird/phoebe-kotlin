@@ -2,6 +2,7 @@
 
 package com.phoebe.api.services.blocking.ref
 
+import com.phoebe.api.core.ClientOptions
 import com.phoebe.api.services.blocking.ref.taxonomy.EbirdService
 import com.phoebe.api.services.blocking.ref.taxonomy.FormService
 import com.phoebe.api.services.blocking.ref.taxonomy.LocaleService
@@ -15,6 +16,13 @@ interface TaxonomyService {
      */
     fun withRawResponse(): WithRawResponse
 
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TaxonomyService
+
     fun ebird(): EbirdService
 
     fun forms(): FormService
@@ -27,6 +35,13 @@ interface TaxonomyService {
 
     /** A view of [TaxonomyService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TaxonomyService.WithRawResponse
 
         fun ebird(): EbirdService.WithRawResponse
 

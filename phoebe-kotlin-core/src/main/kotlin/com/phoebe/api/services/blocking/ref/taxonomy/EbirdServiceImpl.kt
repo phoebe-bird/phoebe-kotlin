@@ -26,6 +26,9 @@ class EbirdServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): EbirdService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EbirdService =
+        EbirdServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: EbirdRetrieveParams,
         requestOptions: RequestOptions,
@@ -37,6 +40,11 @@ class EbirdServiceImpl internal constructor(private val clientOptions: ClientOpt
         EbirdService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): EbirdService.WithRawResponse =
+            EbirdServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         private val retrieveHandler: Handler<List<EbirdRetrieveResponse>> =
             jsonHandler<List<EbirdRetrieveResponse>>(clientOptions.jsonMapper)

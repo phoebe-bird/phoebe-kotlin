@@ -26,6 +26,9 @@ class SpeciesListServiceImpl internal constructor(private val clientOptions: Cli
 
     override fun withRawResponse(): SpeciesListService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SpeciesListService =
+        SpeciesListServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(params: SpeciesListListParams, requestOptions: RequestOptions): List<String> =
         // get /product/spplist/{regionCode}
         withRawResponse().list(params, requestOptions).parse()
@@ -34,6 +37,13 @@ class SpeciesListServiceImpl internal constructor(private val clientOptions: Cli
         SpeciesListService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SpeciesListService.WithRawResponse =
+            SpeciesListServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<List<String>> =
             jsonHandler<List<String>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
