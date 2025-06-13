@@ -26,6 +26,9 @@ class EbirdServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): EbirdServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EbirdServiceAsync =
+        EbirdServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: EbirdRetrieveParams,
         requestOptions: RequestOptions,
@@ -37,6 +40,13 @@ class EbirdServiceAsyncImpl internal constructor(private val clientOptions: Clie
         EbirdServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): EbirdServiceAsync.WithRawResponse =
+            EbirdServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<List<EbirdRetrieveResponse>> =
             jsonHandler<List<EbirdRetrieveResponse>>(clientOptions.jsonMapper)

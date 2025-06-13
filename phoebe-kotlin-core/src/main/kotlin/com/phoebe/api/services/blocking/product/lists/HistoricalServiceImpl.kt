@@ -27,6 +27,9 @@ class HistoricalServiceImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): HistoricalService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): HistoricalService =
+        HistoricalServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: HistoricalRetrieveParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class HistoricalServiceImpl internal constructor(private val clientOptions: Clie
         HistoricalService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): HistoricalService.WithRawResponse =
+            HistoricalServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<List<HistoricalRetrieveResponse>> =
             jsonHandler<List<HistoricalRetrieveResponse>>(clientOptions.jsonMapper)

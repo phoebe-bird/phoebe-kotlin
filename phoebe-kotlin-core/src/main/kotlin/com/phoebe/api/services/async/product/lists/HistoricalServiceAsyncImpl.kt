@@ -27,6 +27,9 @@ class HistoricalServiceAsyncImpl internal constructor(private val clientOptions:
 
     override fun withRawResponse(): HistoricalServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): HistoricalServiceAsync =
+        HistoricalServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: HistoricalRetrieveParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class HistoricalServiceAsyncImpl internal constructor(private val clientOptions:
         HistoricalServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): HistoricalServiceAsync.WithRawResponse =
+            HistoricalServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<List<HistoricalRetrieveResponse>> =
             jsonHandler<List<HistoricalRetrieveResponse>>(clientOptions.jsonMapper)

@@ -27,6 +27,9 @@ class AdjacentServiceImpl internal constructor(private val clientOptions: Client
 
     override fun withRawResponse(): AdjacentService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AdjacentService =
+        AdjacentServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(
         params: AdjacentListParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class AdjacentServiceImpl internal constructor(private val clientOptions: Client
         AdjacentService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): AdjacentService.WithRawResponse =
+            AdjacentServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<List<AdjacentListResponse>> =
             jsonHandler<List<AdjacentListResponse>>(clientOptions.jsonMapper)

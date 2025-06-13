@@ -3,6 +3,7 @@
 package com.phoebe.api.services.async.data.observations
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.phoebe.api.core.ClientOptions
 import com.phoebe.api.core.RequestOptions
 import com.phoebe.api.core.http.HttpResponseFor
 import com.phoebe.api.models.data.observations.Observation
@@ -17,6 +18,13 @@ interface RecentServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): RecentServiceAsync
 
     fun notable(): NotableServiceAsync
 
@@ -49,6 +57,15 @@ interface RecentServiceAsync {
      * A view of [RecentServiceAsync] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): RecentServiceAsync.WithRawResponse
 
         fun notable(): NotableServiceAsync.WithRawResponse
 

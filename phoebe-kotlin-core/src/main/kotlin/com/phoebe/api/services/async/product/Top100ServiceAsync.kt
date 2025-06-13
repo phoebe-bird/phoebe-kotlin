@@ -3,6 +3,7 @@
 package com.phoebe.api.services.async.product
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.phoebe.api.core.ClientOptions
 import com.phoebe.api.core.RequestOptions
 import com.phoebe.api.core.http.HttpResponseFor
 import com.phoebe.api.models.product.top100.Top100RetrieveParams
@@ -14,6 +15,13 @@ interface Top100ServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): Top100ServiceAsync
 
     /**
      * Get the top 100 contributors on a given date for a country or region.
@@ -49,6 +57,15 @@ interface Top100ServiceAsync {
      * A view of [Top100ServiceAsync] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): Top100ServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /product/top100/{regionCode}/{y}/{m}/{d}`, but is

@@ -25,6 +25,9 @@ class RefServiceAsyncImpl internal constructor(private val clientOptions: Client
 
     override fun withRawResponse(): RefServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): RefServiceAsync =
+        RefServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun region(): RegionServiceAsync = region
 
     override fun hotspot(): HotspotServiceAsync = hotspot
@@ -45,6 +48,13 @@ class RefServiceAsyncImpl internal constructor(private val clientOptions: Client
         private val taxonomy: TaxonomyServiceAsync.WithRawResponse by lazy {
             TaxonomyServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): RefServiceAsync.WithRawResponse =
+            RefServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun region(): RegionServiceAsync.WithRawResponse = region
 

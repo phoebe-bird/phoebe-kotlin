@@ -2,6 +2,7 @@
 
 package com.phoebe.api.services.async.ref
 
+import com.phoebe.api.core.ClientOptions
 import com.phoebe.api.services.async.ref.taxonomy.EbirdServiceAsync
 import com.phoebe.api.services.async.ref.taxonomy.FormServiceAsync
 import com.phoebe.api.services.async.ref.taxonomy.LocaleServiceAsync
@@ -14,6 +15,13 @@ interface TaxonomyServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TaxonomyServiceAsync
 
     fun ebird(): EbirdServiceAsync
 
@@ -29,6 +37,15 @@ interface TaxonomyServiceAsync {
      * A view of [TaxonomyServiceAsync] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): TaxonomyServiceAsync.WithRawResponse
 
         fun ebird(): EbirdServiceAsync.WithRawResponse
 

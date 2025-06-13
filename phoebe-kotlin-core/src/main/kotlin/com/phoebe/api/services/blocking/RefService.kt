@@ -2,6 +2,7 @@
 
 package com.phoebe.api.services.blocking
 
+import com.phoebe.api.core.ClientOptions
 import com.phoebe.api.services.blocking.ref.HotspotService
 import com.phoebe.api.services.blocking.ref.RegionService
 import com.phoebe.api.services.blocking.ref.TaxonomyService
@@ -13,6 +14,13 @@ interface RefService {
      */
     fun withRawResponse(): WithRawResponse
 
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): RefService
+
     fun region(): RegionService
 
     fun hotspot(): HotspotService
@@ -21,6 +29,13 @@ interface RefService {
 
     /** A view of [RefService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: (ClientOptions.Builder) -> Unit): RefService.WithRawResponse
 
         fun region(): RegionService.WithRawResponse
 

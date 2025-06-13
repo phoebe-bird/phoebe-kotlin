@@ -25,6 +25,9 @@ class GeoServiceImpl internal constructor(private val clientOptions: ClientOptio
 
     override fun withRawResponse(): GeoService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): GeoService =
+        GeoServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: GeoRetrieveParams,
         requestOptions: RequestOptions,
@@ -36,6 +39,11 @@ class GeoServiceImpl internal constructor(private val clientOptions: ClientOptio
         GeoService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): GeoService.WithRawResponse =
+            GeoServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         private val retrieveHandler: Handler<List<GeoRetrieveResponse>> =
             jsonHandler<List<GeoRetrieveResponse>>(clientOptions.jsonMapper)

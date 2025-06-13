@@ -2,6 +2,7 @@
 
 package com.phoebe.api.client
 
+import com.phoebe.api.core.ClientOptions
 import com.phoebe.api.services.async.DataServiceAsync
 import com.phoebe.api.services.async.ProductServiceAsync
 import com.phoebe.api.services.async.RefServiceAsync
@@ -35,6 +36,13 @@ interface PhoebeClientAsync {
      */
     fun withRawResponse(): WithRawResponse
 
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PhoebeClientAsync
+
     fun data(): DataServiceAsync
 
     fun product(): ProductServiceAsync
@@ -56,6 +64,15 @@ interface PhoebeClientAsync {
 
     /** A view of [PhoebeClientAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): PhoebeClientAsync.WithRawResponse
 
         fun data(): DataServiceAsync.WithRawResponse
 

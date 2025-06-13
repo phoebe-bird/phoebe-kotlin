@@ -35,6 +35,9 @@ class TaxonomyServiceAsyncImpl internal constructor(private val clientOptions: C
 
     override fun withRawResponse(): TaxonomyServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TaxonomyServiceAsync =
+        TaxonomyServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun ebird(): EbirdServiceAsync = ebird
 
     override fun forms(): FormServiceAsync = forms
@@ -67,6 +70,13 @@ class TaxonomyServiceAsyncImpl internal constructor(private val clientOptions: C
         private val speciesGroups: SpeciesGroupServiceAsync.WithRawResponse by lazy {
             SpeciesGroupServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): TaxonomyServiceAsync.WithRawResponse =
+            TaxonomyServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun ebird(): EbirdServiceAsync.WithRawResponse = ebird
 

@@ -27,6 +27,9 @@ class ListServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): ListServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ListServiceAsync =
+        ListServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: ListListParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class ListServiceAsyncImpl internal constructor(private val clientOptions: Clien
         ListServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ListServiceAsync.WithRawResponse =
+            ListServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<List<ListListResponse>> =
             jsonHandler<List<ListListResponse>>(clientOptions.jsonMapper)

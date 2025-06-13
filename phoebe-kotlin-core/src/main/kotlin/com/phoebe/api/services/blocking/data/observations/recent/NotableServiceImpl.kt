@@ -27,6 +27,9 @@ class NotableServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): NotableService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): NotableService =
+        NotableServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(
         params: NotableListParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class NotableServiceImpl internal constructor(private val clientOptions: ClientO
         NotableService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): NotableService.WithRawResponse =
+            NotableServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<List<Observation>> =
             jsonHandler<List<Observation>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

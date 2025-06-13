@@ -2,6 +2,7 @@
 
 package com.phoebe.api.services.async.data.observations
 
+import com.phoebe.api.core.ClientOptions
 import com.phoebe.api.services.async.data.observations.geo.RecentServiceAsync
 
 interface GeoServiceAsync {
@@ -11,10 +12,24 @@ interface GeoServiceAsync {
      */
     fun withRawResponse(): WithRawResponse
 
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): GeoServiceAsync
+
     fun recent(): RecentServiceAsync
 
     /** A view of [GeoServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: (ClientOptions.Builder) -> Unit): GeoServiceAsync.WithRawResponse
 
         fun recent(): RecentServiceAsync.WithRawResponse
     }

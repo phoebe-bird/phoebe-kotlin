@@ -16,6 +16,9 @@ class DataServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withRawResponse(): DataService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): DataService =
+        DataServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun observations(): ObservationService = observations
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -24,6 +27,11 @@ class DataServiceImpl internal constructor(private val clientOptions: ClientOpti
         private val observations: ObservationService.WithRawResponse by lazy {
             ObservationServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): DataService.WithRawResponse =
+            DataServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun observations(): ObservationService.WithRawResponse = observations
     }

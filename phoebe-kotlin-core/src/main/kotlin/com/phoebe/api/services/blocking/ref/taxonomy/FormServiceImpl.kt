@@ -25,6 +25,9 @@ class FormServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withRawResponse(): FormService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): FormService =
+        FormServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(params: FormListParams, requestOptions: RequestOptions): List<String> =
         // get /ref/taxon/forms/{speciesCode}
         withRawResponse().list(params, requestOptions).parse()
@@ -33,6 +36,11 @@ class FormServiceImpl internal constructor(private val clientOptions: ClientOpti
         FormService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): FormService.WithRawResponse =
+            FormServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         private val listHandler: Handler<List<String>> =
             jsonHandler<List<String>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

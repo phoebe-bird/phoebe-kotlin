@@ -27,6 +27,9 @@ class ChecklistServiceImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): ChecklistService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ChecklistService =
+        ChecklistServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun view(
         params: ChecklistViewParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class ChecklistServiceImpl internal constructor(private val clientOptions: Clien
         ChecklistService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ChecklistService.WithRawResponse =
+            ChecklistServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val viewHandler: Handler<ChecklistViewResponse> =
             jsonHandler<ChecklistViewResponse>(clientOptions.jsonMapper)

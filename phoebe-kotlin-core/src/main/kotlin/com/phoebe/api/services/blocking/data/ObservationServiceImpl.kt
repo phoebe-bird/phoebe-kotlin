@@ -25,6 +25,9 @@ class ObservationServiceImpl internal constructor(private val clientOptions: Cli
 
     override fun withRawResponse(): ObservationService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ObservationService =
+        ObservationServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun recent(): RecentService = recent
 
     override fun geo(): GeoService = geo
@@ -45,6 +48,13 @@ class ObservationServiceImpl internal constructor(private val clientOptions: Cli
         private val nearest: NearestService.WithRawResponse by lazy {
             NearestServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ObservationService.WithRawResponse =
+            ObservationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun recent(): RecentService.WithRawResponse = recent
 

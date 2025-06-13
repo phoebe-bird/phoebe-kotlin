@@ -33,6 +33,9 @@ class ListServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): ListServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ListServiceAsync =
+        ListServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun historical(): HistoricalServiceAsync = historical
 
     override suspend fun retrieve(
@@ -50,6 +53,13 @@ class ListServiceAsyncImpl internal constructor(private val clientOptions: Clien
         private val historical: HistoricalServiceAsync.WithRawResponse by lazy {
             HistoricalServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ListServiceAsync.WithRawResponse =
+            ListServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun historical(): HistoricalServiceAsync.WithRawResponse = historical
 

@@ -27,6 +27,9 @@ class NotableServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): NotableServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): NotableServiceAsync =
+        NotableServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: NotableListParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class NotableServiceAsyncImpl internal constructor(private val clientOptions: Cl
         NotableServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): NotableServiceAsync.WithRawResponse =
+            NotableServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<List<Observation>> =
             jsonHandler<List<Observation>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

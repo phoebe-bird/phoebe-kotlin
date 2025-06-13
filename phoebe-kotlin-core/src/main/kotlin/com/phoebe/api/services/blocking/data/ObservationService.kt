@@ -2,6 +2,7 @@
 
 package com.phoebe.api.services.blocking.data
 
+import com.phoebe.api.core.ClientOptions
 import com.phoebe.api.services.blocking.data.observations.GeoService
 import com.phoebe.api.services.blocking.data.observations.NearestService
 import com.phoebe.api.services.blocking.data.observations.RecentService
@@ -13,6 +14,13 @@ interface ObservationService {
      */
     fun withRawResponse(): WithRawResponse
 
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ObservationService
+
     fun recent(): RecentService
 
     fun geo(): GeoService
@@ -23,6 +31,15 @@ interface ObservationService {
      * A view of [ObservationService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ObservationService.WithRawResponse
 
         fun recent(): RecentService.WithRawResponse
 
