@@ -3,13 +3,13 @@
 package com.phoebe.api.services.blocking.ref.taxonomy
 
 import com.phoebe.api.core.ClientOptions
-import com.phoebe.api.core.JsonValue
 import com.phoebe.api.core.RequestOptions
+import com.phoebe.api.core.handlers.errorBodyHandler
 import com.phoebe.api.core.handlers.errorHandler
 import com.phoebe.api.core.handlers.jsonHandler
-import com.phoebe.api.core.handlers.withErrorHandler
 import com.phoebe.api.core.http.HttpMethod
 import com.phoebe.api.core.http.HttpRequest
+import com.phoebe.api.core.http.HttpResponse
 import com.phoebe.api.core.http.HttpResponse.Handler
 import com.phoebe.api.core.http.HttpResponseFor
 import com.phoebe.api.core.http.parseable
@@ -39,7 +39,8 @@ class LocaleServiceImpl internal constructor(private val clientOptions: ClientOp
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         LocaleService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -48,7 +49,6 @@ class LocaleServiceImpl internal constructor(private val clientOptions: ClientOp
 
         private val listHandler: Handler<List<LocaleListResponse>> =
             jsonHandler<List<LocaleListResponse>>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: LocaleListParams,
@@ -63,7 +63,7 @@ class LocaleServiceImpl internal constructor(private val clientOptions: ClientOp
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
