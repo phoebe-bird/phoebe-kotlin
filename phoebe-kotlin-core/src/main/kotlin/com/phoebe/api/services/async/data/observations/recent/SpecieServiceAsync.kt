@@ -42,7 +42,7 @@ interface SpecieServiceAsync {
     ): List<Observation> =
         retrieve(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: SpecieRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -74,7 +74,7 @@ interface SpecieServiceAsync {
         ): HttpResponseFor<List<Observation>> =
             retrieve(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: SpecieRetrieveParams,

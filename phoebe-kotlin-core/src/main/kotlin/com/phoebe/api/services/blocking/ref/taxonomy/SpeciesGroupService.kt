@@ -34,13 +34,13 @@ interface SpeciesGroupService {
     ): List<SpeciesGroupListResponse> =
         list(params.toBuilder().speciesGrouping(speciesGrouping).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: SpeciesGroupListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<SpeciesGroupListResponse>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         speciesGrouping: SpeciesGroupListParams.SpeciesGrouping,
         requestOptions: RequestOptions,
@@ -73,14 +73,14 @@ interface SpeciesGroupService {
         ): HttpResponseFor<List<SpeciesGroupListResponse>> =
             list(params.toBuilder().speciesGrouping(speciesGrouping).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: SpeciesGroupListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<SpeciesGroupListResponse>>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             speciesGrouping: SpeciesGroupListParams.SpeciesGrouping,

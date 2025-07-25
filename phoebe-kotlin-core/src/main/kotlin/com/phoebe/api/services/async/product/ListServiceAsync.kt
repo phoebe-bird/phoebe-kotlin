@@ -34,13 +34,13 @@ interface ListServiceAsync {
     ): List<ListRetrieveResponse> =
         retrieve(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: ListRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<ListRetrieveResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         regionCode: String,
         requestOptions: RequestOptions,
@@ -70,14 +70,14 @@ interface ListServiceAsync {
         ): HttpResponseFor<List<ListRetrieveResponse>> =
             retrieve(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: ListRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<ListRetrieveResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             regionCode: String,

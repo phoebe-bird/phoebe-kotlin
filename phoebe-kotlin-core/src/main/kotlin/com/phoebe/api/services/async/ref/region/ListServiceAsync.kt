@@ -36,7 +36,7 @@ interface ListServiceAsync {
     ): List<ListListResponse> =
         list(params.toBuilder().parentRegionCode(parentRegionCode).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: ListListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -64,7 +64,7 @@ interface ListServiceAsync {
         ): HttpResponseFor<List<ListListResponse>> =
             list(params.toBuilder().parentRegionCode(parentRegionCode).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: ListListParams,

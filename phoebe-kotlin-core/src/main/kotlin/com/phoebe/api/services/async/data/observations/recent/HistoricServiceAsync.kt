@@ -36,7 +36,7 @@ interface HistoricServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation> = list(params.toBuilder().d(d).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: HistoricListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -68,7 +68,7 @@ interface HistoricServiceAsync {
         ): HttpResponseFor<List<Observation>> =
             list(params.toBuilder().d(d).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: HistoricListParams,

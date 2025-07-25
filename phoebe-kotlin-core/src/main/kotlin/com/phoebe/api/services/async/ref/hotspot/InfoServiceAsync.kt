@@ -34,13 +34,13 @@ interface InfoServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InfoRetrieveResponse = retrieve(params.toBuilder().locId(locId).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: InfoRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InfoRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(locId: String, requestOptions: RequestOptions): InfoRetrieveResponse =
         retrieve(locId, InfoRetrieveParams.none(), requestOptions)
 
@@ -66,14 +66,14 @@ interface InfoServiceAsync {
         ): HttpResponseFor<InfoRetrieveResponse> =
             retrieve(params.toBuilder().locId(locId).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: InfoRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InfoRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             locId: String,

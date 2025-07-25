@@ -37,13 +37,13 @@ interface ChecklistService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ChecklistViewResponse = view(params.toBuilder().subId(subId).build(), requestOptions)
 
-    /** @see [view] */
+    /** @see view */
     fun view(
         params: ChecklistViewParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ChecklistViewResponse
 
-    /** @see [view] */
+    /** @see view */
     fun view(subId: String, requestOptions: RequestOptions): ChecklistViewResponse =
         view(subId, ChecklistViewParams.none(), requestOptions)
 
@@ -69,14 +69,14 @@ interface ChecklistService {
         ): HttpResponseFor<ChecklistViewResponse> =
             view(params.toBuilder().subId(subId).build(), requestOptions)
 
-        /** @see [view] */
+        /** @see view */
         @MustBeClosed
         fun view(
             params: ChecklistViewParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ChecklistViewResponse>
 
-        /** @see [view] */
+        /** @see view */
         @MustBeClosed
         fun view(
             subId: String,

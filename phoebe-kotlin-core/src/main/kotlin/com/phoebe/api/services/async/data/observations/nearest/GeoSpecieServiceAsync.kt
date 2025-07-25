@@ -34,7 +34,7 @@ interface GeoSpecieServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation> = list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: GeoSpecieListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -66,7 +66,7 @@ interface GeoSpecieServiceAsync {
         ): HttpResponseFor<List<Observation>> =
             list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: GeoSpecieListParams,

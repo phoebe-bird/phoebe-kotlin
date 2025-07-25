@@ -34,13 +34,13 @@ interface AdjacentService {
     ): List<AdjacentListResponse> =
         list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: AdjacentListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<AdjacentListResponse>
 
-    /** @see [list] */
+    /** @see list */
     fun list(regionCode: String, requestOptions: RequestOptions): List<AdjacentListResponse> =
         list(regionCode, AdjacentListParams.none(), requestOptions)
 
@@ -66,14 +66,14 @@ interface AdjacentService {
         ): HttpResponseFor<List<AdjacentListResponse>> =
             list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: AdjacentListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<AdjacentListResponse>>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             regionCode: String,

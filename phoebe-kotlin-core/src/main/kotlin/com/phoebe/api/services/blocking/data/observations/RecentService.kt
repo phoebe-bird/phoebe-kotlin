@@ -43,13 +43,13 @@ interface RecentService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation> = list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: RecentListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation>
 
-    /** @see [list] */
+    /** @see list */
     fun list(regionCode: String, requestOptions: RequestOptions): List<Observation> =
         list(regionCode, RecentListParams.none(), requestOptions)
 
@@ -81,14 +81,14 @@ interface RecentService {
         ): HttpResponseFor<List<Observation>> =
             list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: RecentListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<Observation>>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             regionCode: String,

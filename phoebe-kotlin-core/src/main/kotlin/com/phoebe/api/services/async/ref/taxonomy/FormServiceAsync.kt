@@ -32,13 +32,13 @@ interface FormServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<String> = list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: FormListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<String>
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(speciesCode: String, requestOptions: RequestOptions): List<String> =
         list(speciesCode, FormListParams.none(), requestOptions)
 
@@ -64,14 +64,14 @@ interface FormServiceAsync {
         ): HttpResponseFor<List<String>> =
             list(params.toBuilder().speciesCode(speciesCode).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: FormListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<String>>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             speciesCode: String,

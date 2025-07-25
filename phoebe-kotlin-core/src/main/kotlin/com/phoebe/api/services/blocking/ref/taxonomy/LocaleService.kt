@@ -36,7 +36,7 @@ interface LocaleService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<LocaleListResponse>
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): List<LocaleListResponse> =
         list(LocaleListParams.none(), requestOptions)
 
@@ -60,7 +60,7 @@ interface LocaleService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<LocaleListResponse>>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<List<LocaleListResponse>> =
             list(LocaleListParams.none(), requestOptions)

@@ -47,13 +47,13 @@ interface InfoServiceAsync {
     ): InfoRetrieveResponse =
         retrieve(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: InfoRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InfoRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(regionCode: String, requestOptions: RequestOptions): InfoRetrieveResponse =
         retrieve(regionCode, InfoRetrieveParams.none(), requestOptions)
 
@@ -79,14 +79,14 @@ interface InfoServiceAsync {
         ): HttpResponseFor<InfoRetrieveResponse> =
             retrieve(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: InfoRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InfoRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             regionCode: String,

@@ -30,7 +30,7 @@ interface HistoricalService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<HistoricalRetrieveResponse> = retrieve(params.toBuilder().d(d).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: HistoricalRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -60,7 +60,7 @@ interface HistoricalService {
         ): HttpResponseFor<List<HistoricalRetrieveResponse>> =
             retrieve(params.toBuilder().d(d).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: HistoricalRetrieveParams,

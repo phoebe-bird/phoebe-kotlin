@@ -34,13 +34,13 @@ interface SpeciesListServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<String> = list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: SpeciesListListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<String>
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(regionCode: String, requestOptions: RequestOptions): List<String> =
         list(regionCode, SpeciesListListParams.none(), requestOptions)
 
@@ -71,14 +71,14 @@ interface SpeciesListServiceAsync {
         ): HttpResponseFor<List<String>> =
             list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: SpeciesListListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<String>>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             regionCode: String,
