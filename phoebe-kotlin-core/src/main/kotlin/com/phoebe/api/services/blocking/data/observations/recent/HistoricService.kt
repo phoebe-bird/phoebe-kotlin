@@ -36,7 +36,7 @@ interface HistoricService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation> = list(params.toBuilder().d(d).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: HistoricListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -64,7 +64,7 @@ interface HistoricService {
         ): HttpResponseFor<List<Observation>> =
             list(params.toBuilder().d(d).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: HistoricListParams,

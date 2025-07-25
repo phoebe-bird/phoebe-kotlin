@@ -31,7 +31,7 @@ interface VersionServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<VersionListResponse>
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): List<VersionListResponse> =
         list(VersionListParams.none(), requestOptions)
 
@@ -59,7 +59,7 @@ interface VersionServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<VersionListResponse>>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

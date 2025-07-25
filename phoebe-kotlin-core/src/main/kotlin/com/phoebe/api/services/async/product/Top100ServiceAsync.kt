@@ -47,7 +47,7 @@ interface Top100ServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Top100RetrieveResponse> = retrieve(params.toBuilder().d(d).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: Top100RetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -79,7 +79,7 @@ interface Top100ServiceAsync {
         ): HttpResponseFor<List<Top100RetrieveResponse>> =
             retrieve(params.toBuilder().d(d).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: Top100RetrieveParams,

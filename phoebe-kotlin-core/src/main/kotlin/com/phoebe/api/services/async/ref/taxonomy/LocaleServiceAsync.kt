@@ -36,7 +36,7 @@ interface LocaleServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<LocaleListResponse>
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): List<LocaleListResponse> =
         list(LocaleListParams.none(), requestOptions)
 
@@ -64,7 +64,7 @@ interface LocaleServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<LocaleListResponse>>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

@@ -37,13 +37,13 @@ interface HotspotServiceAsync {
     ): List<HotspotListResponse> =
         list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: HotspotListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<HotspotListResponse>
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         regionCode: String,
         requestOptions: RequestOptions,
@@ -79,14 +79,14 @@ interface HotspotServiceAsync {
         ): HttpResponseFor<List<HotspotListResponse>> =
             list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: HotspotListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<HotspotListResponse>>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             regionCode: String,

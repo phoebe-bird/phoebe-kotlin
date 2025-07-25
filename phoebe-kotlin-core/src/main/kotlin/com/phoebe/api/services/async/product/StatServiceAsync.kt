@@ -35,7 +35,7 @@ interface StatServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatRetrieveResponse = retrieve(params.toBuilder().d(d).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: StatRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -63,7 +63,7 @@ interface StatServiceAsync {
         ): HttpResponseFor<StatRetrieveResponse> =
             retrieve(params.toBuilder().d(d).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: StatRetrieveParams,

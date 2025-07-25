@@ -36,7 +36,7 @@ interface ListService {
     ): List<ListListResponse> =
         list(params.toBuilder().parentRegionCode(parentRegionCode).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ListListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -64,7 +64,7 @@ interface ListService {
         ): HttpResponseFor<List<ListListResponse>> =
             list(params.toBuilder().parentRegionCode(parentRegionCode).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: ListListParams,

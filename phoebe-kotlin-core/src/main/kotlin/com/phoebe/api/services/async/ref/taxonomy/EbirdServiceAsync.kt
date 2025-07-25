@@ -34,7 +34,7 @@ interface EbirdServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<EbirdRetrieveResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(requestOptions: RequestOptions): List<EbirdRetrieveResponse> =
         retrieve(EbirdRetrieveParams.none(), requestOptions)
 
@@ -60,7 +60,7 @@ interface EbirdServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<EbirdRetrieveResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             requestOptions: RequestOptions

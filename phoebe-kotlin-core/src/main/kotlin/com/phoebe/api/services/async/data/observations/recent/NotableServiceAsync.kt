@@ -35,13 +35,13 @@ interface NotableServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation> = list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: NotableListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<Observation>
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(regionCode: String, requestOptions: RequestOptions): List<Observation> =
         list(regionCode, NotableListParams.none(), requestOptions)
 
@@ -71,14 +71,14 @@ interface NotableServiceAsync {
         ): HttpResponseFor<List<Observation>> =
             list(params.toBuilder().regionCode(regionCode).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: NotableListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<Observation>>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             regionCode: String,

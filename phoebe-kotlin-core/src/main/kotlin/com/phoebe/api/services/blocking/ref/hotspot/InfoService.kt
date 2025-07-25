@@ -34,13 +34,13 @@ interface InfoService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InfoRetrieveResponse = retrieve(params.toBuilder().locId(locId).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: InfoRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InfoRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(locId: String, requestOptions: RequestOptions): InfoRetrieveResponse =
         retrieve(locId, InfoRetrieveParams.none(), requestOptions)
 
@@ -66,14 +66,14 @@ interface InfoService {
         ): HttpResponseFor<InfoRetrieveResponse> =
             retrieve(params.toBuilder().locId(locId).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: InfoRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InfoRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             locId: String,
