@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class LocaleListResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val code: JsonField<String>,
     private val lastUpdated: JsonField<String>,
@@ -198,12 +199,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LocaleListResponse && code == other.code && lastUpdated == other.lastUpdated && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is LocaleListResponse &&
+            code == other.code &&
+            lastUpdated == other.lastUpdated &&
+            name == other.name &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(code, lastUpdated, name, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(code, lastUpdated, name, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

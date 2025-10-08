@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class EbirdRetrieveResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val bandingCodes: JsonField<List<String>>,
     private val category: JsonField<String>,
@@ -563,12 +564,39 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EbirdRetrieveResponse && bandingCodes == other.bandingCodes && category == other.category && comName == other.comName && comNameCodes == other.comNameCodes && familyCode == other.familyCode && familyComName == other.familyComName && familySciName == other.familySciName && order == other.order && sciName == other.sciName && sciNameCodes == other.sciNameCodes && speciesCode == other.speciesCode && taxonOrder == other.taxonOrder && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is EbirdRetrieveResponse &&
+            bandingCodes == other.bandingCodes &&
+            category == other.category &&
+            comName == other.comName &&
+            comNameCodes == other.comNameCodes &&
+            familyCode == other.familyCode &&
+            familyComName == other.familyComName &&
+            familySciName == other.familySciName &&
+            order == other.order &&
+            sciName == other.sciName &&
+            sciNameCodes == other.sciNameCodes &&
+            speciesCode == other.speciesCode &&
+            taxonOrder == other.taxonOrder &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(bandingCodes, category, comName, comNameCodes, familyCode, familyComName, familySciName, order, sciName, sciNameCodes, speciesCode, taxonOrder, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            bandingCodes,
+            category,
+            comName,
+            comNameCodes,
+            familyCode,
+            familyComName,
+            familySciName,
+            order,
+            sciName,
+            sciNameCodes,
+            speciesCode,
+            taxonOrder,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

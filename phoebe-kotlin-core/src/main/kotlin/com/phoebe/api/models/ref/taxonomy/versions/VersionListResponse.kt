@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class VersionListResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val authorityVer: JsonField<Double>,
     private val latest: JsonField<Boolean>,
@@ -172,12 +173,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is VersionListResponse && authorityVer == other.authorityVer && latest == other.latest && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is VersionListResponse &&
+            authorityVer == other.authorityVer &&
+            latest == other.latest &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(authorityVer, latest, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class StatRetrieveResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val numChecklists: JsonField<Int>,
     private val numContributors: JsonField<Int>,
@@ -214,12 +215,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is StatRetrieveResponse && numChecklists == other.numChecklists && numContributors == other.numContributors && numSpecies == other.numSpecies && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is StatRetrieveResponse &&
+            numChecklists == other.numChecklists &&
+            numContributors == other.numContributors &&
+            numSpecies == other.numSpecies &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(numChecklists, numContributors, numSpecies, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(numChecklists, numContributors, numSpecies, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

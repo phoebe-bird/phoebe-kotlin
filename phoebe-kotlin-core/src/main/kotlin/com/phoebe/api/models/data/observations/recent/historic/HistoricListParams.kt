@@ -509,7 +509,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Cat && value == other.value /* spotless:on */
+            return other is Cat && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -635,7 +635,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Detail && value == other.value /* spotless:on */
+            return other is Detail && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -761,7 +761,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Rank && value == other.value /* spotless:on */
+            return other is Rank && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -774,10 +774,40 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is HistoricListParams && regionCode == other.regionCode && y == other.y && m == other.m && d == other.d && cat == other.cat && detail == other.detail && hotspot == other.hotspot && includeProvisional == other.includeProvisional && maxResults == other.maxResults && r == other.r && rank == other.rank && sppLocale == other.sppLocale && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is HistoricListParams &&
+            regionCode == other.regionCode &&
+            y == other.y &&
+            m == other.m &&
+            d == other.d &&
+            cat == other.cat &&
+            detail == other.detail &&
+            hotspot == other.hotspot &&
+            includeProvisional == other.includeProvisional &&
+            maxResults == other.maxResults &&
+            r == other.r &&
+            rank == other.rank &&
+            sppLocale == other.sppLocale &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(regionCode, y, m, d, cat, detail, hotspot, includeProvisional, maxResults, r, rank, sppLocale, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            regionCode,
+            y,
+            m,
+            d,
+            cat,
+            detail,
+            hotspot,
+            includeProvisional,
+            maxResults,
+            r,
+            rank,
+            sppLocale,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "HistoricListParams{regionCode=$regionCode, y=$y, m=$m, d=$d, cat=$cat, detail=$detail, hotspot=$hotspot, includeProvisional=$includeProvisional, maxResults=$maxResults, r=$r, rank=$rank, sppLocale=$sppLocale, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
