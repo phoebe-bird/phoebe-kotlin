@@ -14,7 +14,7 @@ import java.util.Objects
 /**
  * Get the taxonomy used by eBird. #### Notes Each entry in the taxonomy contains a species code for
  * example, barswa for Barn Swallow. You can download the taxonomy for selected species using the
- * _species_ query parameter with a comma separating each code. Otherwise the full taxonomy is
+ * *species* query parameter with a comma separating each code. Otherwise the full taxonomy is
  * downloaded.
  */
 class EbirdRetrieveParams
@@ -342,7 +342,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Fmt && value == other.value /* spotless:on */
+            return other is Fmt && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -355,10 +355,18 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EbirdRetrieveParams && cat == other.cat && fmt == other.fmt && locale == other.locale && species == other.species && version == other.version && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is EbirdRetrieveParams &&
+            cat == other.cat &&
+            fmt == other.fmt &&
+            locale == other.locale &&
+            species == other.species &&
+            version == other.version &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cat, fmt, locale, species, version, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(cat, fmt, locale, species, version, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "EbirdRetrieveParams{cat=$cat, fmt=$fmt, locale=$locale, species=$species, version=$version, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

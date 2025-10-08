@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class InfoRetrieveResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val bounds: JsonField<Bounds>,
     private val result: JsonField<String>,
@@ -161,6 +162,7 @@ private constructor(
         (bounds.asKnown()?.validity() ?: 0) + (if (result.asKnown() == null) 0 else 1)
 
     class Bounds
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val maxX: JsonField<Float>,
         private val maxY: JsonField<Float>,
@@ -375,12 +377,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Bounds && maxX == other.maxX && maxY == other.maxY && minX == other.minX && minY == other.minY && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Bounds &&
+                maxX == other.maxX &&
+                maxY == other.maxY &&
+                minX == other.minX &&
+                minY == other.minY &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(maxX, maxY, minX, minY, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(maxX, maxY, minX, minY, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -393,12 +400,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InfoRetrieveResponse && bounds == other.bounds && result == other.result && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is InfoRetrieveResponse &&
+            bounds == other.bounds &&
+            result == other.result &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(bounds, result, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

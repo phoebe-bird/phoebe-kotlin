@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AdjacentListResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val code: JsonField<String>,
     private val name: JsonField<String>,
@@ -165,12 +166,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AdjacentListResponse && code == other.code && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AdjacentListResponse &&
+            code == other.code &&
+            name == other.name &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(code, name, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

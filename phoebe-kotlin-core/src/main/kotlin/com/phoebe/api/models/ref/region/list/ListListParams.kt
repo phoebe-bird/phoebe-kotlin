@@ -336,7 +336,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Fmt && value == other.value /* spotless:on */
+            return other is Fmt && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -349,10 +349,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ListListParams && regionType == other.regionType && parentRegionCode == other.parentRegionCode && fmt == other.fmt && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ListListParams &&
+            regionType == other.regionType &&
+            parentRegionCode == other.parentRegionCode &&
+            fmt == other.fmt &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(regionType, parentRegionCode, fmt, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(regionType, parentRegionCode, fmt, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "ListListParams{regionType=$regionType, parentRegionCode=$parentRegionCode, fmt=$fmt, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
