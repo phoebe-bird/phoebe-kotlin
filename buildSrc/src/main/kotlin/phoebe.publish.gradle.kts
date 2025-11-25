@@ -27,9 +27,9 @@ configure<PublishingExtension> {
                 }
 
                 scm {
-                    connection.set("scm:git:git://github.com/stainless-sdks/phoebe-kotlin.git")
-                    developerConnection.set("scm:git:git://github.com/stainless-sdks/phoebe-kotlin.git")
-                    url.set("https://github.com/stainless-sdks/phoebe-kotlin")
+                    connection.set("scm:git:git://github.com/phoebe-bird/phoebe-kotlin.git")
+                    developerConnection.set("scm:git:git://github.com/phoebe-bird/phoebe-kotlin.git")
+                    url.set("https://github.com/phoebe-bird/phoebe-kotlin")
                 }
 
                 versionMapping {
