@@ -4,7 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":phoebe-kotlin"))
+    implementation(project(":phoebe-kotlin-core"))
+    implementation(project(":phoebe-kotlin-client-okhttp"))
 }
 
 application {
