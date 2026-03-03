@@ -19,6 +19,13 @@ interface NearestServiceAsync {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): NearestServiceAsync
 
+    /**
+     * The data/obs end-points are used to fetch observations submitted to eBird in checklists.
+     * There are two categories of end-point: 1. Fetch observations for a specific country, region
+     * or location. 2. Fetch observations for nearby locations - up to a distance of 50km. Each
+     * end-point supports optional query parameters which allow you to filter the list of
+     * observations returned.
+     */
     fun geoSpecies(): GeoSpecieServiceAsync
 
     /**
@@ -35,6 +42,13 @@ interface NearestServiceAsync {
             modifier: (ClientOptions.Builder) -> Unit
         ): NearestServiceAsync.WithRawResponse
 
+        /**
+         * The data/obs end-points are used to fetch observations submitted to eBird in checklists.
+         * There are two categories of end-point: 1. Fetch observations for a specific country,
+         * region or location. 2. Fetch observations for nearby locations - up to a distance of
+         * 50km. Each end-point supports optional query parameters which allow you to filter the
+         * list of observations returned.
+         */
         fun geoSpecies(): GeoSpecieServiceAsync.WithRawResponse
     }
 }

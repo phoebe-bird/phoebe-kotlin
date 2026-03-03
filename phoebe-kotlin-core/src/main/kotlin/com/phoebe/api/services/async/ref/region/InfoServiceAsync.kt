@@ -9,6 +9,7 @@ import com.phoebe.api.core.http.HttpResponseFor
 import com.phoebe.api.models.ref.region.info.InfoRetrieveParams
 import com.phoebe.api.models.ref.region.info.InfoRetrieveResponse
 
+/** The ref/region end-points return information on regions. */
 interface InfoServiceAsync {
 
     /**

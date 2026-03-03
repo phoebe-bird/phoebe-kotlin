@@ -18,6 +18,7 @@ import com.phoebe.api.core.prepareAsync
 import com.phoebe.api.models.ref.region.info.InfoRetrieveParams
 import com.phoebe.api.models.ref.region.info.InfoRetrieveResponse
 
+/** The ref/region end-points return information on regions. */
 class InfoServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     InfoServiceAsync {
 

@@ -21,6 +21,12 @@ import com.phoebe.api.services.blocking.data.observations.geo.recent.NotableServ
 import com.phoebe.api.services.blocking.data.observations.geo.recent.SpecieService
 import com.phoebe.api.services.blocking.data.observations.geo.recent.SpecieServiceImpl
 
+/**
+ * The data/obs end-points are used to fetch observations submitted to eBird in checklists. There
+ * are two categories of end-point: 1. Fetch observations for a specific country, region or
+ * location. 2. Fetch observations for nearby locations - up to a distance of 50km. Each end-point
+ * supports optional query parameters which allow you to filter the list of observations returned.
+ */
 class RecentServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     RecentService {
 
@@ -37,8 +43,22 @@ class RecentServiceImpl internal constructor(private val clientOptions: ClientOp
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): RecentService =
         RecentServiceImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /**
+     * The data/obs end-points are used to fetch observations submitted to eBird in checklists.
+     * There are two categories of end-point: 1. Fetch observations for a specific country, region
+     * or location. 2. Fetch observations for nearby locations - up to a distance of 50km. Each
+     * end-point supports optional query parameters which allow you to filter the list of
+     * observations returned.
+     */
     override fun species(): SpecieService = species
 
+    /**
+     * The data/obs end-points are used to fetch observations submitted to eBird in checklists.
+     * There are two categories of end-point: 1. Fetch observations for a specific country, region
+     * or location. 2. Fetch observations for nearby locations - up to a distance of 50km. Each
+     * end-point supports optional query parameters which allow you to filter the list of
+     * observations returned.
+     */
     override fun notable(): NotableService = notable
 
     override fun list(params: RecentListParams, requestOptions: RequestOptions): List<Observation> =
@@ -64,8 +84,22 @@ class RecentServiceImpl internal constructor(private val clientOptions: ClientOp
         ): RecentService.WithRawResponse =
             RecentServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
+        /**
+         * The data/obs end-points are used to fetch observations submitted to eBird in checklists.
+         * There are two categories of end-point: 1. Fetch observations for a specific country,
+         * region or location. 2. Fetch observations for nearby locations - up to a distance of
+         * 50km. Each end-point supports optional query parameters which allow you to filter the
+         * list of observations returned.
+         */
         override fun species(): SpecieService.WithRawResponse = species
 
+        /**
+         * The data/obs end-points are used to fetch observations submitted to eBird in checklists.
+         * There are two categories of end-point: 1. Fetch observations for a specific country,
+         * region or location. 2. Fetch observations for nearby locations - up to a distance of
+         * 50km. Each end-point supports optional query parameters which allow you to filter the
+         * list of observations returned.
+         */
         override fun notable(): NotableService.WithRawResponse = notable
 
         private val listHandler: Handler<List<Observation>> =

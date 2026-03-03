@@ -11,6 +11,10 @@ import com.phoebe.api.models.ref.hotspot.HotspotListResponse
 import com.phoebe.api.services.async.ref.hotspot.GeoServiceAsync
 import com.phoebe.api.services.async.ref.hotspot.InfoServiceAsync
 
+/**
+ * With the ref/hotspot end-points you can find the hotspots for a given country or region or nearby
+ * hotspots
+ */
 interface HotspotServiceAsync {
 
     /**
@@ -25,8 +29,16 @@ interface HotspotServiceAsync {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): HotspotServiceAsync
 
+    /**
+     * With the ref/hotspot end-points you can find the hotspots for a given country or region or
+     * nearby hotspots
+     */
     fun geo(): GeoServiceAsync
 
+    /**
+     * With the ref/hotspot end-points you can find the hotspots for a given country or region or
+     * nearby hotspots
+     */
     fun info(): InfoServiceAsync
 
     /** Hotspots in a region */
@@ -63,8 +75,16 @@ interface HotspotServiceAsync {
             modifier: (ClientOptions.Builder) -> Unit
         ): HotspotServiceAsync.WithRawResponse
 
+        /**
+         * With the ref/hotspot end-points you can find the hotspots for a given country or region
+         * or nearby hotspots
+         */
         fun geo(): GeoServiceAsync.WithRawResponse
 
+        /**
+         * With the ref/hotspot end-points you can find the hotspots for a given country or region
+         * or nearby hotspots
+         */
         fun info(): InfoServiceAsync.WithRawResponse
 
         /**
