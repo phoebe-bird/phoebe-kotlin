@@ -9,6 +9,10 @@ import com.phoebe.api.core.http.HttpResponseFor
 import com.phoebe.api.models.ref.hotspot.geo.GeoRetrieveParams
 import com.phoebe.api.models.ref.hotspot.geo.GeoRetrieveResponse
 
+/**
+ * With the ref/hotspot end-points you can find the hotspots for a given country or region or nearby
+ * hotspots
+ */
 interface GeoServiceAsync {
 
     /**

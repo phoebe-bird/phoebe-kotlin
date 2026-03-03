@@ -9,6 +9,7 @@ import com.phoebe.api.core.http.HttpResponseFor
 import com.phoebe.api.models.ref.region.adjacent.AdjacentListParams
 import com.phoebe.api.models.ref.region.adjacent.AdjacentListResponse
 
+/** With the ref/geo end-point you can find a country's or region's neighbours. */
 interface AdjacentServiceAsync {
 
     /**

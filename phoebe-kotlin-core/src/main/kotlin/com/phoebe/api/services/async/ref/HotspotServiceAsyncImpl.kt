@@ -22,6 +22,10 @@ import com.phoebe.api.services.async.ref.hotspot.GeoServiceAsyncImpl
 import com.phoebe.api.services.async.ref.hotspot.InfoServiceAsync
 import com.phoebe.api.services.async.ref.hotspot.InfoServiceAsyncImpl
 
+/**
+ * With the ref/hotspot end-points you can find the hotspots for a given country or region or nearby
+ * hotspots
+ */
 class HotspotServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     HotspotServiceAsync {
 
@@ -38,8 +42,16 @@ class HotspotServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): HotspotServiceAsync =
         HotspotServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /**
+     * With the ref/hotspot end-points you can find the hotspots for a given country or region or
+     * nearby hotspots
+     */
     override fun geo(): GeoServiceAsync = geo
 
+    /**
+     * With the ref/hotspot end-points you can find the hotspots for a given country or region or
+     * nearby hotspots
+     */
     override fun info(): InfoServiceAsync = info
 
     override suspend fun list(
@@ -70,8 +82,16 @@ class HotspotServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
+        /**
+         * With the ref/hotspot end-points you can find the hotspots for a given country or region
+         * or nearby hotspots
+         */
         override fun geo(): GeoServiceAsync.WithRawResponse = geo
 
+        /**
+         * With the ref/hotspot end-points you can find the hotspots for a given country or region
+         * or nearby hotspots
+         */
         override fun info(): InfoServiceAsync.WithRawResponse = info
 
         private val listHandler: Handler<List<HotspotListResponse>> =

@@ -18,6 +18,10 @@ import com.phoebe.api.core.prepareAsync
 import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveParams
 import com.phoebe.api.models.ref.hotspot.info.InfoRetrieveResponse
 
+/**
+ * With the ref/hotspot end-points you can find the hotspots for a given country or region or nearby
+ * hotspots
+ */
 class InfoServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     InfoServiceAsync {
 

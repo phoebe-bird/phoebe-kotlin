@@ -22,6 +22,10 @@ import com.phoebe.api.services.blocking.ref.hotspot.GeoServiceImpl
 import com.phoebe.api.services.blocking.ref.hotspot.InfoService
 import com.phoebe.api.services.blocking.ref.hotspot.InfoServiceImpl
 
+/**
+ * With the ref/hotspot end-points you can find the hotspots for a given country or region or nearby
+ * hotspots
+ */
 class HotspotServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     HotspotService {
 
@@ -38,8 +42,16 @@ class HotspotServiceImpl internal constructor(private val clientOptions: ClientO
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): HotspotService =
         HotspotServiceImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /**
+     * With the ref/hotspot end-points you can find the hotspots for a given country or region or
+     * nearby hotspots
+     */
     override fun geo(): GeoService = geo
 
+    /**
+     * With the ref/hotspot end-points you can find the hotspots for a given country or region or
+     * nearby hotspots
+     */
     override fun info(): InfoService = info
 
     override fun list(
@@ -70,8 +82,16 @@ class HotspotServiceImpl internal constructor(private val clientOptions: ClientO
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
+        /**
+         * With the ref/hotspot end-points you can find the hotspots for a given country or region
+         * or nearby hotspots
+         */
         override fun geo(): GeoService.WithRawResponse = geo
 
+        /**
+         * With the ref/hotspot end-points you can find the hotspots for a given country or region
+         * or nearby hotspots
+         */
         override fun info(): InfoService.WithRawResponse = info
 
         private val listHandler: Handler<List<HotspotListResponse>> =

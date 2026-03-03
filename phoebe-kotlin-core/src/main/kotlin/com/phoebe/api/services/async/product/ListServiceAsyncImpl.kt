@@ -20,6 +20,12 @@ import com.phoebe.api.models.product.lists.ListRetrieveResponse
 import com.phoebe.api.services.async.product.lists.HistoricalServiceAsync
 import com.phoebe.api.services.async.product.lists.HistoricalServiceAsyncImpl
 
+/**
+ * The data/obs end-points are used to fetch observations submitted to eBird in checklists. There
+ * are two categories of end-point: 1. Fetch observations for a specific country, region or
+ * location. 2. Fetch observations for nearby locations - up to a distance of 50km. Each end-point
+ * supports optional query parameters which allow you to filter the list of observations returned.
+ */
 class ListServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     ListServiceAsync {
 
@@ -36,6 +42,12 @@ class ListServiceAsyncImpl internal constructor(private val clientOptions: Clien
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ListServiceAsync =
         ListServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /**
+     * The product end-points make it easy to get the information shown in various pages on the
+     * eBird web site: 1. The Top 100 contributors on a given date. 2. The checklists submitted on a
+     * given date. 3. The most recent checklists submitted. 4. A summary of the checklists submitted
+     * on a given date. 5. The details and all the observations of a checklist.
+     */
     override fun historical(): HistoricalServiceAsync = historical
 
     override suspend fun retrieve(
@@ -62,6 +74,12 @@ class ListServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
+        /**
+         * The product end-points make it easy to get the information shown in various pages on the
+         * eBird web site: 1. The Top 100 contributors on a given date. 2. The checklists submitted
+         * on a given date. 3. The most recent checklists submitted. 4. A summary of the checklists
+         * submitted on a given date. 5. The details and all the observations of a checklist.
+         */
         override fun historical(): HistoricalServiceAsync.WithRawResponse = historical
 
         private val retrieveHandler: Handler<List<ListRetrieveResponse>> =

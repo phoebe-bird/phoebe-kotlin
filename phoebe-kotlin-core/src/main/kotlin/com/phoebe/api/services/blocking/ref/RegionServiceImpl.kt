@@ -28,10 +28,13 @@ class RegionServiceImpl internal constructor(private val clientOptions: ClientOp
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): RegionService =
         RegionServiceImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /** With the ref/geo end-point you can find a country's or region's neighbours. */
     override fun adjacent(): AdjacentService = adjacent
 
+    /** The ref/region end-points return information on regions. */
     override fun info(): InfoService = info
 
+    /** The ref/region end-points return information on regions. */
     override fun list(): ListService = list
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -54,10 +57,13 @@ class RegionServiceImpl internal constructor(private val clientOptions: ClientOp
         ): RegionService.WithRawResponse =
             RegionServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
+        /** With the ref/geo end-point you can find a country's or region's neighbours. */
         override fun adjacent(): AdjacentService.WithRawResponse = adjacent
 
+        /** The ref/region end-points return information on regions. */
         override fun info(): InfoService.WithRawResponse = info
 
+        /** The ref/region end-points return information on regions. */
         override fun list(): ListService.WithRawResponse = list
     }
 }
