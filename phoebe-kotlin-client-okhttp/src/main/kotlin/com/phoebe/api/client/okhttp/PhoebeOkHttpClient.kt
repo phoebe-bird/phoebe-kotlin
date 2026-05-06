@@ -10,6 +10,7 @@ import com.phoebe.api.core.Sleeper
 import com.phoebe.api.core.Timeout
 import com.phoebe.api.core.http.Headers
 import com.phoebe.api.core.http.HttpClient
+import com.phoebe.api.core.http.ProxyAuthenticator
 import com.phoebe.api.core.http.QueryParams
 import com.phoebe.api.core.jsonMapper
 import java.net.Proxy
@@ -45,6 +46,7 @@ class PhoebeOkHttpClient private constructor() {
         private var clientOptions: ClientOptions.Builder = ClientOptions.builder()
         private var dispatcherExecutorService: ExecutorService? = null
         private var proxy: Proxy? = null
+        private var proxyAuthenticator: ProxyAuthenticator? = null
         private var maxIdleConnections: Int? = null
         private var keepAliveDuration: Duration? = null
         private var sslSocketFactory: SSLSocketFactory? = null
@@ -64,6 +66,14 @@ class PhoebeOkHttpClient private constructor() {
         }
 
         fun proxy(proxy: Proxy?) = apply { this.proxy = proxy }
+
+        /**
+         * Provides credentials when an HTTP proxy responds with `407 Proxy Authentication
+         * Required`.
+         */
+        fun proxyAuthenticator(proxyAuthenticator: ProxyAuthenticator?) = apply {
+            this.proxyAuthenticator = proxyAuthenticator
+        }
 
         /**
          * The maximum number of idle connections kept by the underlying OkHttp connection pool.
@@ -325,6 +335,7 @@ class PhoebeOkHttpClient private constructor() {
                         OkHttpClient.builder()
                             .timeout(clientOptions.timeout())
                             .proxy(proxy)
+                            .proxyAuthenticator(proxyAuthenticator)
                             .maxIdleConnections(maxIdleConnections)
                             .keepAliveDuration(keepAliveDuration)
                             .dispatcherExecutorService(dispatcherExecutorService)
