@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.0-alpha.2](https://github.com/phoebe-bird/phoebe-kotlin/compare/v0.1.0-alpha.1...v0.1.0-alpha.2) (2026-05-14)
+
+
+### Features
+
+* initial stlc build ([b8b74b5](https://github.com/phoebe-bird/phoebe-kotlin/commit/b8b74b5a29367df380a26ae2fba1d33a96e4c261))
+
+
+### Chores
+
+* enable release-please ([32dec2d](https://github.com/phoebe-bird/phoebe-kotlin/commit/32dec2df05f1e94efa0aa8e557847af262595970))
+* regenerate from phoebe-config[#2](https://github.com/phoebe-bird/phoebe-kotlin/issues/2) ([6f0b1a1](https://github.com/phoebe-bird/phoebe-kotlin/commit/6f0b1a1f9056ebe182a0bd0de12035fa2da6061a))
+* regenerate SDKs from phoebe-config[#2](https://github.com/phoebe-bird/phoebe-kotlin/issues/2) (feat: bump openapi info.version to 1.0.2 (Phase 9 dry run [#2](https://github.com/phoebe-bird/phoebe-kotlin/issues/2))) ([3d42c1b](https://github.com/phoebe-bird/phoebe-kotlin/commit/3d42c1b6076611a5973df466711c33475f5b5832))
+
 ## 0.1.0-alpha.1 (2026-05-13)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/phoebe-bird/phoebe-kotlin/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
