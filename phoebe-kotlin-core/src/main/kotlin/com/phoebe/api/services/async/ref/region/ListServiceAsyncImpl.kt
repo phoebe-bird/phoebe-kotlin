@@ -18,6 +18,7 @@ import com.phoebe.api.core.prepareAsync
 import com.phoebe.api.models.ref.region.list.ListListParams
 import com.phoebe.api.models.ref.region.list.ListListResponse
 
+/** The ref/region end-points return information on regions. */
 class ListServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     ListServiceAsync {
 

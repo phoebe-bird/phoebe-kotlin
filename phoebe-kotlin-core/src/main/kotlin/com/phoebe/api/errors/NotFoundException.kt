@@ -5,10 +5,14 @@ package com.phoebe.api.errors
 import com.phoebe.api.core.JsonValue
 import com.phoebe.api.core.checkRequired
 import com.phoebe.api.core.http.Headers
+import com.phoebe.api.core.jsonMapper
 
 class NotFoundException
 private constructor(private val headers: Headers, private val body: JsonValue, cause: Throwable?) :
-    PhoebeServiceException("404: $body", cause) {
+    PhoebeServiceException(
+        "404: ${if (body.isMissing()) "Unknown" else jsonMapper().writeValueAsString(body)}",
+        cause,
+    ) {
 
     override fun statusCode(): Int = 404
 

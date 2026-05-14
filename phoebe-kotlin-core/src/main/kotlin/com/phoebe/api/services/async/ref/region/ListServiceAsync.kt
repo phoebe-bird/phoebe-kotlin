@@ -9,6 +9,7 @@ import com.phoebe.api.core.http.HttpResponseFor
 import com.phoebe.api.models.ref.region.list.ListListParams
 import com.phoebe.api.models.ref.region.list.ListListResponse
 
+/** The ref/region end-points return information on regions. */
 interface ListServiceAsync {
 
     /**

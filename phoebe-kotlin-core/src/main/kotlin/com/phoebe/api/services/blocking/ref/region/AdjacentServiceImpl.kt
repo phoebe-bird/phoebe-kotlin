@@ -18,6 +18,7 @@ import com.phoebe.api.core.prepare
 import com.phoebe.api.models.ref.region.adjacent.AdjacentListParams
 import com.phoebe.api.models.ref.region.adjacent.AdjacentListResponse
 
+/** With the ref/geo end-point you can find a country's or region's neighbours. */
 class AdjacentServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     AdjacentService {
 

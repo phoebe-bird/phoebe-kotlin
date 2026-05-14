@@ -17,6 +17,10 @@ import com.phoebe.api.core.prepare
 import com.phoebe.api.models.ref.hotspot.geo.GeoRetrieveParams
 import com.phoebe.api.models.ref.hotspot.geo.GeoRetrieveResponse
 
+/**
+ * With the ref/hotspot end-points you can find the hotspots for a given country or region or nearby
+ * hotspots
+ */
 class GeoServiceImpl internal constructor(private val clientOptions: ClientOptions) : GeoService {
 
     private val withRawResponse: GeoService.WithRawResponse by lazy {

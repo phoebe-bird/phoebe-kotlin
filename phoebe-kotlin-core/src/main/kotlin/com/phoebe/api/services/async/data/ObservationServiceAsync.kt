@@ -21,6 +21,13 @@ interface ObservationServiceAsync {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ObservationServiceAsync
 
+    /**
+     * The data/obs end-points are used to fetch observations submitted to eBird in checklists.
+     * There are two categories of end-point: 1. Fetch observations for a specific country, region
+     * or location. 2. Fetch observations for nearby locations - up to a distance of 50km. Each
+     * end-point supports optional query parameters which allow you to filter the list of
+     * observations returned.
+     */
     fun recent(): RecentServiceAsync
 
     fun geo(): GeoServiceAsync
@@ -42,6 +49,13 @@ interface ObservationServiceAsync {
             modifier: (ClientOptions.Builder) -> Unit
         ): ObservationServiceAsync.WithRawResponse
 
+        /**
+         * The data/obs end-points are used to fetch observations submitted to eBird in checklists.
+         * There are two categories of end-point: 1. Fetch observations for a specific country,
+         * region or location. 2. Fetch observations for nearby locations - up to a distance of
+         * 50km. Each end-point supports optional query parameters which allow you to filter the
+         * list of observations returned.
+         */
         fun recent(): RecentServiceAsync.WithRawResponse
 
         fun geo(): GeoServiceAsync.WithRawResponse
